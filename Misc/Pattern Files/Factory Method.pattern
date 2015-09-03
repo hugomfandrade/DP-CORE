@@ -1,0 +1,11 @@
+Factory Method
+A Normal Concrete Product
+B Abstracted Product
+C Normal Concrete Creator
+D Abstracted Creator
+End_Members
+A inherits B
+C inherits D
+C creates A
+C uses B
+End_Connections
