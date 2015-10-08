@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="DPDHMMY" default="dist" basedir=".">
+
+	<description>
+		DPDHMMY: A Design Pattern Detection Tool for Code Reuse
+	</description>
+
+	<property name="src" location="src" />
+	<property name="bin" location="bin" />
+	<property name="dist" location="dist" />
+	<property name="examples" location="examples" />
+	<property name="patterns" location="patterns" />
+
+	<target name="init" description="create the bin folder">
+		<mkdir dir="${bin}" />
+	</target>
+
+	<target name="compile" depends="init" description="compile the java files">
+		<javac includeantruntime="true" srcdir="${src}" destdir="${bin}" />
+	</target>
+
+	<target name="initdist" description="create the dist folder">
+		<mkdir dir="${dist}" />
+		<mkdir dir="${dist}/patterns" />
+		<mkdir dir="${dist}/examples" />
+	</target>
+
+	<target name="copypatterns" depends="initdist" description="copy the patterns folder">
+		<copy todir="${dist}/patterns">
+			<fileset dir="${patterns}" includes="**" />
+		</copy>
+	</target>
+
+	<target name="copyexamples" depends="initdist" description="copy the examples folder">
+		<copy todir="${dist}/examples">
+			<fileset dir="${examples}" includes="**" />
+		</copy>
+	</target>
+
+	<target name="copyreadme" depends="initdist" description="copy the examples folder">
+		<copy file="README.md" tofile="${dist}/readme.txt" />
+	</target>
+
+	<target name="dist" depends="compile,copyreadme,copypatterns,copyexamples" description="create the jar file">
+		<jar jarfile="${dist}/DPDHMMY.jar" basedir="${bin}">
+			<manifest>
+				<attribute name="Main-Class" value="gui.MainWindow" />
+				<attribute name="Class-Path" value="." />
+			</manifest>
+			<zipfileset excludes="META-INF/*.SF" src="${java.home}/../lib/tools.jar" />
+		</jar>
+	</target>
+
+	<target name="clean" description="delete all build directories">
+		<delete dir="${bin}" />
+		<delete dir="${dist}" />
+	</target>
+
+</project>
+

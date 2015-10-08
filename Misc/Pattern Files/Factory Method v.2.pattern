@@ -1,9 +1,0 @@
-Factory Method v.2
-A Normal Concrete Product
-B Abstracted Product
-C Normal Concrete Creator
-End_Members
-A inherits B
-C creates A
-C uses B
-End_Connections
