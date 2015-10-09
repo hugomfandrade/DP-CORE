@@ -140,13 +140,13 @@ public class MainWindow extends JFrame {
 					String s = PatternDetectionAlgorithm.DetectPattern_Results(pat, Boolean.parseBoolean(args[3]));
 					System.out.println(s);
 				} else {
-					System.out.println("For batch mode run as DPDHMMY.jar batch project_folder pattern_file"
+					System.out.println("For batch mode run as DPDHMMY.jar batch project_folder pattern_file "
 							+ "true|false where the last argument allows grouping in hypercandidates");
 				}
 			} else {
 				System.out.println("DPDHMMY: Design Pattern Detection Tool for Code Reuse\n"
 						+ "Run without arguments for GUI mode.\n" + "");
-				System.out.println("For batch mode run as DPDHMMY.jar batch project_folder pattern_file"
+				System.out.println("For batch mode run as DPDHMMY.jar batch project_folder pattern_file "
 						+ "true|false where the last argument allows grouping in hypercandidates");
 			}
 		} else {
@@ -220,8 +220,8 @@ public class MainWindow extends JFrame {
 	public static void refresh(File f) {
 		ArrayList<String> Patterns = listPatternFilesForFolder(f);
 		if (Patterns == null || Patterns.size() == 0) {
-			JOptionPane.showMessageDialog(new JFrame(), "Current Folder contains no pattern files.", "No Pattern Files",
-					JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(new JFrame(), "Current Folder contains no pattern files.",
+					"No Pattern Files", JOptionPane.INFORMATION_MESSAGE);
 			String choices[] = new String[1];
 			choices[0] = "Choose a Pattern";
 			cb.setVisible(false);
