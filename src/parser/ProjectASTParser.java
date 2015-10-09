@@ -137,7 +137,7 @@ public class ProjectASTParser {
 				if (!GeneralMethods.isPrimitive(aclass.getSimpleName().toString())) {
 					Create_ClassObject(aclass);
 				} else {
-					System.out.println("Primitive type found: " + aclass.getSimpleName().toString());
+					// System.out.println("Primitive type found: " + aclass.getSimpleName().toString());
 				}
 			}
 			return super.visitClass(node, p);
@@ -343,8 +343,8 @@ public class ProjectASTParser {
 		// Print uses
 		for (Connection s : c.getConnections(Type.use)) {
 			ClassObject c1 = s.get_To();
-			System.out.println(
-					c.get_abstraction() + " " + c.getName() + " uses " + c1.get_abstraction() + " " + c1.getName());
+			System.out.println(c.get_abstraction() + " " + c.getName() + " uses " + c1.get_abstraction() + " "
+					+ c1.getName());
 		}
 	}
 
@@ -357,8 +357,8 @@ public class ProjectASTParser {
 		// Print inherits
 		for (Connection s : c.getConnections(Type.inh)) {
 			ClassObject c1 = s.get_To();
-			System.out.println(
-					c.get_abstraction() + " " + c.getName() + " inherits " + c1.get_abstraction() + " " + c1.getName());
+			System.out.println(c.get_abstraction() + " " + c.getName() + " inherits " + c1.get_abstraction() + " "
+					+ c1.getName());
 		}
 	}
 
@@ -371,8 +371,8 @@ public class ProjectASTParser {
 		// Print has
 		for (Connection s : c.getConnections(Type.has)) {
 			ClassObject c1 = s.get_To();
-			System.out.println(
-					c.get_abstraction() + " " + c.getName() + " has " + c1.get_abstraction() + " " + c1.getName());
+			System.out.println(c.get_abstraction() + " " + c.getName() + " has " + c1.get_abstraction() + " "
+					+ c1.getName());
 		}
 	}
 
@@ -399,8 +399,8 @@ public class ProjectASTParser {
 		// Print calls
 		for (Connection s : c.getConnections(Type.call)) {
 			ClassObject c1 = s.get_To();
-			System.out.println(
-					c.get_abstraction() + " " + c.getName() + " calls " + c1.get_abstraction() + " " + c1.getName());
+			System.out.println(c.get_abstraction() + " " + c.getName() + " calls " + c1.get_abstraction() + " "
+					+ c1.getName());
 		}
 	}
 
@@ -413,8 +413,8 @@ public class ProjectASTParser {
 		// Print creates
 		for (Connection s : c.getConnections(Type.create)) {
 			ClassObject c1 = s.get_To();
-			System.out.println(
-					c.get_abstraction() + " " + c.getName() + " creates " + c1.get_abstraction() + " " + c1.getName());
+			System.out.println(c.get_abstraction() + " " + c.getName() + " creates " + c1.get_abstraction() + " "
+					+ c1.getName());
 		}
 	}
 }
