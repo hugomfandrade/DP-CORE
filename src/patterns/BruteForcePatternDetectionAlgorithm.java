@@ -1,3 +1,9 @@
+package patterns;
+
+public class BruteForcePatternDetectionAlgorithm {
+
+}
+
 // package patterns;
 //
 // import java.util.ArrayList;
@@ -13,7 +19,7 @@
 // import parser.ClassObject.Abstraction;
 // import parser.ProjectASTParser.SysTime;
 //
-/// **
+// / **
 // * Basic algorithm class. Its function DetectPattern(Pattern p) is responsible for
 // * detecting patterns over the given code.
 // * IMPORTANT: Need to parse the code and call finduses() etc for each ClassObject first.
@@ -469,7 +475,7 @@
 // }
 // }
 //
-/// **
+// / **
 // * Finds all the SuperCandidates out of the PatternCandidates already detected.
 // * This is the first step of the grouping procedure.
 // *
