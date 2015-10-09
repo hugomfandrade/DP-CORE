@@ -99,33 +99,16 @@ public class PatternDetectionAlgorithm {
 	 * @return Returns true if ClassObject o2's abstraction agrees with o1's.
 	 */
 	private static Boolean AbstractionCheck(ClassObject o1, ClassObject o2) {
-		switch (o1.get_abstraction()) {
-		case Normal:
-			if (o2.get_abstraction() == Abstraction.Normal) {
-				return true;
-			}
-			return false;
-		case Interface:
-			if (o2.get_abstraction() == Abstraction.Interface) {
-				return true;
-			}
-			return false;
-		case Abstract:
-			if (o2.get_abstraction() == Abstraction.Abstract) {
-				return true;
-			}
-			return false;
-			// Either interface or abstract
-		case Abstracted:
-			if (o2.get_abstraction() == Abstraction.Abstract || o2.get_abstraction() == Abstraction.Interface) {
-				return true;
-			}
-			return false;
-		case Any:
+		Abstraction abstraction1 = o1.get_abstraction();
+		Abstraction abstraction2 = o2.get_abstraction();
+		if (abstraction1 == abstraction2)
 			return true;
-		default:
-			return false;
-		}
+		else if (abstraction1 == Abstraction.Abstracted
+				&& (abstraction2 == Abstraction.Abstract || abstraction2 == Abstraction.Interface))
+			return true;
+		else if (abstraction1 == Abstraction.Any)
+			return true;
+		return false;
 	}
 
 	/**
