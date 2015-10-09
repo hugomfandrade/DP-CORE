@@ -1,7 +1,6 @@
 package patterns;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import parser.ClassObject;
 import parser.Connection;
@@ -21,7 +20,6 @@ public class PatternDetectionAlgorithm {
 	private static ArrayList<PatternCandidate> TotalSuperCandidates = new ArrayList<PatternCandidate>();
 	private static ArrayList<PatternCandidate> TotalHyperCandidates = new ArrayList<PatternCandidate>();
 	private static Pattern p;
-	private static HashMap<String, ClassObject> member = new HashMap<String, ClassObject>();
 
 	// /////////////////// METHODS //////////////////////////////
 
@@ -59,109 +57,37 @@ public class PatternDetectionAlgorithm {
 		// Clearing Candidates array of previous calls
 		Candidates.clear();
 
-		// Define a structure for the members of the pattern
-		for (ClassObject o : ProjectASTParser.Classes.values()) {
-			if (AbstractionCheck(p.get_Members().get(0), o)) {
-				ArrayList<ClassObject> ClassObjects = new ArrayList<ClassObject>();
-				ClassObjects.addAll(ProjectASTParser.Classes.values());
-				ClassObjects.remove(o);
-				ArrayList<ClassObject> Candidate = new ArrayList<ClassObject>();
-				Candidate.add(o);
-				Recursive(ClassObjects, Candidate, 1);
-			}
-		}
+		ArrayList<ClassObject> ClassObjects = new ArrayList<ClassObject>(ProjectASTParser.Classes.values());
+		ArrayList<ClassObject> Candidate = new ArrayList<ClassObject>();
+		Recursive(ClassObjects, Candidate, 0);
 	}
 
 	/**
 	 * Recursive function implementing moving deeper into the detection tree.
 	 * 
 	 * @param ClassObjects The ClassObject items not being used already at an higher node
-	 * @param Cand The ClassObject items that have already been chosen for the pattern candidate
+	 * @param CurrentCandidate The ClassObject items that have already been chosen for the pattern candidate
 	 * @param depth A number indicating the depth of the current node of the detection tree. Root is number 0.
 	 */
-	private static void Recursive(ArrayList<ClassObject> ClassObjects, ArrayList<ClassObject> Cand, int depth) {
+	private static void Recursive(ArrayList<ClassObject> ClassObjects, ArrayList<ClassObject> CurrentCandidate,
+			int depth) {
 		if (depth < p.get_memb_num()) {
 			for (ClassObject o : ClassObjects) {
-				if (AbstractionCheck(p.get_Members().get(depth), o) && ConnectionsCheck(Cand, o, depth)) {
-					ArrayList<ClassObject> CO = new ArrayList<ClassObject>();
-					CO.addAll(ClassObjects);
-					CO.remove(o);
-					ArrayList<ClassObject> Candidate = new ArrayList<ClassObject>();
-					Candidate.addAll(Cand);
-					Candidate.add(o);
-					Recursive(CO, Candidate, depth + 1);
+				if (AbstractionCheck(p.get_Members().get(depth), o) && ConnectionsCheck(CurrentCandidate, o, depth)) {
+					ArrayList<ClassObject> NextClassObjects = new ArrayList<ClassObject>(ClassObjects);
+					NextClassObjects.remove(o);
+					ArrayList<ClassObject> NextCandidate = new ArrayList<ClassObject>(CurrentCandidate);
+					NextCandidate.add(o);
+					Recursive(NextClassObjects, NextCandidate, depth + 1);
 				}
 			}
 		} else {
-			// Checking Sequence
-			// Clear Hashmap
-			member.clear();
-
-			// Placing candidate classobjects with their respective member names into Hashmap member
-			int i = 0;
-			for (ClassObject pm : p.get_Members()) {
-				member.put(pm.getName(), Cand.get(i));
-				i++;
+			PatternCandidate temp = new PatternCandidate(p.get_name());
+			for (int i = 0; i < p.get_memb_num(); i++) {
+				temp.addMember(CurrentCandidate.get(i), p.get_Members().get(i).getName(), p.get_Members().get(i)
+						.getAbility());
 			}
-			Boolean flag = true;
-			// Checking all connections inside this pattern
-			for (Connection ac : p.get_Connections()) {
-				switch (ac.get_type()) {
-				case has:
-					if (!(member.get(ac.get_From().getName())).has(member.get(ac.get_To().getName()))) {
-						flag = false;
-					}
-					break;
-				case use:
-					if (!(member.get(ac.get_From().getName())).uses(member.get(ac.get_To().getName()))) {
-						flag = false;
-					}
-					break;
-				case inh:
-					if (!(member.get(ac.get_From().getName())).inherits(member.get(ac.get_To().getName()))) {
-						flag = false;
-					}
-					break;
-				case ref:
-					if (!(member.get(ac.get_From().getName())).references(member.get(ac.get_To().getName()))) {
-						flag = false;
-					}
-					break;
-				case create:
-					if (!(member.get(ac.get_From().getName())).creates(member.get(ac.get_To().getName()))) {
-						flag = false;
-					}
-					break;
-				case call:
-					if (!(member.get(ac.get_From().getName())).calls(member.get(ac.get_To().getName()))) {
-						flag = false;
-					}
-					break;
-				case wildcard:
-					if (!(member.get(ac.get_From().getName())).has(member.get(ac.get_To().getName()))
-							&& !(member.get(ac.get_From().getName())).uses(member.get(ac.get_To().getName()))
-							&& !(member.get(ac.get_From().getName())).inherits(member.get(ac.get_To().getName()))
-							&& !(member.get(ac.get_From().getName())).references(member.get(ac.get_To().getName()))
-							&& !(member.get(ac.get_From().getName())).creates(member.get(ac.get_To().getName()))
-							&& !(member.get(ac.get_From().getName())).calls(member.get(ac.get_To().getName()))) {
-						flag = false;
-					}
-					break;
-				default:
-					System.out.println("ERROR!");
-					System.exit(0);
-					break;
-				}
-				if (flag == false)
-					break;
-			}
-			if (flag) {
-				PatternCandidate temp = new PatternCandidate(p.get_name());
-				for (i = 0; i < p.get_memb_num(); i++) {
-					temp.addMember(Cand.get(i), p.get_Members().get(i).getName(), p.get_Members().get(i).getAbility());
-				}
-				Candidates.add(temp);
-			}
+			Candidates.add(temp);
 		}
 	}
 
@@ -189,7 +115,7 @@ public class PatternDetectionAlgorithm {
 				return true;
 			}
 			return false;
-		// Either interface or abstract
+			// Either interface or abstract
 		case Abstracted:
 			if (o2.get_abstraction() == Abstraction.Abstract || o2.get_abstraction() == Abstraction.Interface) {
 				return true;
