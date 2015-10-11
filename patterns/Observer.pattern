@@ -1,11 +1,9 @@
 Observer
 A Normal Concrete Observer
-B Normal Concrete Subject
-C Abstracted Observer
-D Abstracted Subject
+B Abstracted Observer
+C Any Subject
 End_Members
-A inherits C
-B inherits D
-A calls D
-D references C
+A inherits B
+A calls C
+C references B
 End_Connections

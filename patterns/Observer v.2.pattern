@@ -1,9 +1,0 @@
-Observer v.2
-A Normal Concrete Observer
-B Normal Concrete Subject
-C Abstracted Observer
-End_Members
-A inherits C
-A calls B
-B references C
-End_Connections
