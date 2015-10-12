@@ -9,7 +9,7 @@ Double click on the jar file.
 
 Executing in batch mode
 -----------------------
-Execute as <code>DPDHMMY.jar batch project\_folder pattern\_file true|false</code>
-where the last argument allows grouping in hypercandidates
+Execute as <code>java -jar DPDHMMY.jar -project="path/to/project" -pattern="path/to/pattern" -group=true|false</code>
+where the last argument allows grouping in hypercandidates (default is true)
 
 

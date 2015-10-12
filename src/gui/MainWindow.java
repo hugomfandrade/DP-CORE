@@ -9,7 +9,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.*;
+
 import parser.ClassObject;
 import parser.ClassObject.Abstraction;
 import parser.Connection;
@@ -131,23 +134,95 @@ public class MainWindow extends JFrame {
 		}
 	}
 
+	/**
+	 * Prints the help message of the command line interface.
+	 */
+	private static void printHelpMessage() {
+		System.out.println("DPDHMMY: Design Pattern Detection Tool for Code Reuse\n"
+				+ "Run without arguments for GUI mode.\n" + "");
+		System.out.println("For batch mode run as\njava -jar DPDHMMY.jar -project=\"path/to/project\" "
+				+ "-pattern=\"path/to/pattern\" -group=true|false where the last argument allows "
+				+ "grouping in hypercandidates (default is true)");
+	}
+
+	/**
+	 * Parses the command line arguments.
+	 * 
+	 * @param args the arguments to be parsed.
+	 * @return a string with the values of the arguments.
+	 */
+	public static String[] parseArgs(String[] args) {
+		List<String> col = new ArrayList<String>();
+		for (String arg : args) {
+			String narg = arg.trim();
+			if (narg.contains("=")) {
+				for (String n : narg.split("=")) {
+					col.add(n);
+				}
+			}
+			else
+				col.add(arg.trim());
+		}
+		boolean sproject = false;
+		boolean spattern = false;
+		boolean sgroup = false;
+		String project = "";
+		String pattern = "";
+		String stringGroup = "";
+		for (String c : col) {
+			if (c.startsWith("-project")){
+				sproject = true;
+				spattern = false;
+				sgroup = false;
+			}
+			else if (c.startsWith("-pattern")){
+				sproject = false;
+				spattern = true;
+				sgroup = false;
+			}
+			else if (c.startsWith("-group")){
+				sproject = false;
+				spattern = false;
+				sgroup = true;
+			}
+			else{
+				if (sproject)
+					project += c + " ";
+				else if (spattern)
+					pattern += c + " ";
+				else if (sgroup)
+					stringGroup += c + " ";
+			}
+		}
+		project = project.trim();
+		pattern = pattern.trim();
+		return new String[]{project.trim(), pattern.trim(), stringGroup.trim().toLowerCase()};
+	}
+
+	/**
+	 * Executes the application.
+	 * 
+	 * @param args optional arguments for executing in command line mode.
+	 */
 	public static void main(String args[]) {
 		if (args.length > 0) {
-			if (args[0].equals("batch")) {
-				if (args.length == 4) {
-					ProjectASTParser.parse(args[1]);
-					Pattern pat = MainWindow.extractPattern(new File(args[2]));
-					String s = PatternDetectionAlgorithm.DetectPattern_Results(pat, Boolean.parseBoolean(args[3]));
+			String[] arguments = parseArgs(args);
+			String project = arguments[0];
+			String pattern = arguments[1];
+			boolean group = true;
+			if (!(project.length() > 0 && pattern.length() > 0))
+				printHelpMessage();
+			else{
+				if (arguments[2].length() > 0 && !(arguments[2].equals("true") || arguments[2].equals("false")))
+					printHelpMessage();
+				else {
+					if (arguments[2].equals("true") || arguments[2].equals("false"))
+						group = Boolean.parseBoolean(arguments[2]);
+					ProjectASTParser.parse(project);
+					Pattern pat = MainWindow.extractPattern(new File(pattern));
+					String s = PatternDetectionAlgorithm.DetectPattern_Results(pat, group);
 					System.out.println(s);
-				} else {
-					System.out.println("For batch mode run as DPDHMMY.jar batch project_folder pattern_file "
-							+ "true|false where the last argument allows grouping in hypercandidates");
 				}
-			} else {
-				System.out.println("DPDHMMY: Design Pattern Detection Tool for Code Reuse\n"
-						+ "Run without arguments for GUI mode.\n" + "");
-				System.out.println("For batch mode run as DPDHMMY.jar batch project_folder pattern_file "
-						+ "true|false where the last argument allows grouping in hypercandidates");
 			}
 		} else {
 			// Set System Java L&F
