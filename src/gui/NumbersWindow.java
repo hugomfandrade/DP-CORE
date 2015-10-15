@@ -9,9 +9,6 @@ import patterns.Pattern;
 /**
  * First window of the Pattern Creation Tool. Here the Numbers of the members and connections are defined.
  * Also the pattern's name.
- * 
- * @author Tony
- *
  */
 @SuppressWarnings("serial")
 public class NumbersWindow extends JDialog {
@@ -102,9 +99,6 @@ public class NumbersWindow extends JDialog {
 
 	/**
 	 * Event when OK button is pressed. If certain conditions are met, continues to the next frame.
-	 * 
-	 * @author Tony
-	 *
 	 */
 	public class event_ok implements ActionListener {
 		@Override
@@ -140,9 +134,6 @@ public class NumbersWindow extends JDialog {
 
 	/**
 	 * Event when Cancel button is pressed. A Yes/No Dialog appears asking for cancel confirmation.
-	 * 
-	 * @author Tony
-	 *
 	 */
 	public class event_cancel implements ActionListener {
 		@Override

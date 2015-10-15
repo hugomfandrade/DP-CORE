@@ -12,9 +12,6 @@ import parser.ProjectASTParser;
 /**
  * Action of the button Scan for Connections of mainWindow. It calls the ProjectASTParser parse function while
  * showing a please wait JDialog.
- * 
- * @author Tony
- *
  */
 @SuppressWarnings("serial")
 class ShowWaitAction extends AbstractAction {

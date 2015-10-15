@@ -6,9 +6,6 @@ import javax.swing.*;
 
 /**
  * Second window of the Pattern Creation Tool. Here the members are defined.(Abilities, Abstractions)
- * 
- * @author Tony
- *
  */
 @SuppressWarnings("serial")
 public class MemberWindow extends JDialog {
@@ -104,9 +101,6 @@ public class MemberWindow extends JDialog {
 
 	/**
 	 * Event when OK button is pressed. If certain conditions are met, continues to the next frame.
-	 * 
-	 * @author Tony
-	 *
 	 */
 	public class event_ok implements ActionListener {
 		@SuppressWarnings("rawtypes")
@@ -133,9 +127,8 @@ public class MemberWindow extends JDialog {
 							duplicates = true;
 				if (duplicates == false) {
 					for (int i = 0; i < textFieldList.size(); i++) {
-						MainWindow.p.insert_member(Character.toString((char) (65 + i)),
-								MainWindow
-										.StringtoAbstraction(((JComboBox) cbList.get(i)).getSelectedItem().toString()),
+						MainWindow.p.insert_member(Character.toString((char) (65 + i)), MainWindow
+								.StringtoAbstraction(((JComboBox) cbList.get(i)).getSelectedItem().toString()),
 								((JTextField) textFieldList.get(i)).getText());
 					}
 					dispose();
@@ -150,9 +143,6 @@ public class MemberWindow extends JDialog {
 
 	/**
 	 * Event when Cancel button is pressed. A Yes/No Dialog appears asking for cancel confirmation.
-	 * 
-	 * @author Tony
-	 *
 	 */
 	public class event_cancel implements ActionListener {
 		@Override

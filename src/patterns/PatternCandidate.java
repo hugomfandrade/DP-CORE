@@ -6,7 +6,6 @@ import parser.ClassObject;
 
 /**
  * Represents a number of ClassObjects and their roles as parts of a Design Pattern.
- * 
  */
 public class PatternCandidate {
 
@@ -25,10 +24,12 @@ public class PatternCandidate {
 	}
 
 	/**
-	 * Takes as input a ClassObject and a String representing a part(ClassObject)
-	 * of the Design Pattern and its respective role(String), adding them to their
-	 * respective arraylists.
+	 * Takes as input a ClassObject and a String representing a part(ClassObject) of the Design Pattern and its
+	 * respective role(String), adding them to their respective arraylists.
 	 * 
+	 * @param c the ClassObject.
+	 * @param s1 member name e.g. "A".
+	 * @param s2 member pattern name e.g. "Concrete Factory".
 	 */
 	public void addMember(ClassObject c, String s1, String s2) {
 		Members.add(c);
@@ -40,6 +41,7 @@ public class PatternCandidate {
 	/**
 	 * Returns the name of the Pattern.
 	 * 
+	 * @return the name of the Pattern.
 	 */
 	public String getPatternName() {
 		return PatternName;
@@ -47,7 +49,6 @@ public class PatternCandidate {
 
 	/**
 	 * Prints the members of this PatternCandidate and their respective roles.
-	 * 
 	 */
 	public void printcandidate() {
 		for (int i = 0; i < MemberCount; i++) {
@@ -58,7 +59,7 @@ public class PatternCandidate {
 	/**
 	 * Prints the members of this PatternCandidate and their respective roles into a String.
 	 * 
-	 * @return a String containing the members of this PatternCandidate
+	 * @return a String containing the members of this PatternCandidate.
 	 */
 	public String candidatetoString() {
 		String s = "";
@@ -71,7 +72,7 @@ public class PatternCandidate {
 	/**
 	 * Returns an integer representing the number of this PatternCandidate's members.
 	 * 
-	 * @return MemberCount
+	 * @return an integer representing the number of this PatternCandidate's members.
 	 */
 	public int getMemberCount() {
 		return MemberCount;
@@ -80,7 +81,7 @@ public class PatternCandidate {
 	/**
 	 * Sets an integer representing the number of this PatternCandidate's members.
 	 * 
-	 * @param memberCount
+	 * @param memberCount the number of this PatternCandidate's members to be set.
 	 */
 	public void setMemberCount(int memberCount) {
 		MemberCount = memberCount;
@@ -89,7 +90,7 @@ public class PatternCandidate {
 	/**
 	 * Returns an ArrayList of ClassObjects which contains the ClassObjects this PatternCandidate consists of.
 	 * 
-	 * @return Members
+	 * @return an ArrayList of ClassObjects which contains the ClassObjects this PatternCandidate consists of.
 	 */
 	public ArrayList<ClassObject> getMembers() {
 		return Members;
@@ -98,7 +99,7 @@ public class PatternCandidate {
 	/**
 	 * Sets an ArrayList of ClassObjects which contains the ClassObjects this PatternCandidate consists of.
 	 * 
-	 * @param members
+	 * @param members the ArrayList to be set which contains the ClassObjects this PatternCandidate consists of.
 	 */
 	public void setMembers(ArrayList<ClassObject> members) {
 		Members = members;
@@ -107,7 +108,7 @@ public class PatternCandidate {
 	/**
 	 * Returns an ArrayList of Strings which contains the names of this PatternCandidate's ClassObjects.
 	 * 
-	 * @return MemberNames
+	 * @return an ArrayList of Strings which contains the names of this PatternCandidate's ClassObjects.
 	 */
 	public ArrayList<String> getMemberNames() {
 		return MemberNames;
@@ -116,7 +117,7 @@ public class PatternCandidate {
 	/**
 	 * Sets an ArrayList of Strings which contains the names of this PatternCandidate's ClassObjects.
 	 * 
-	 * @param memberNames
+	 * @param memberNames the ArrayList which contains the names to be set to this PatternCandidate's ClassObjects.
 	 */
 	public void setMemberNames(ArrayList<String> memberNames) {
 		MemberNames = memberNames;
@@ -125,7 +126,7 @@ public class PatternCandidate {
 	/**
 	 * Returns an ArrayList of Strings which contains the Abilities of this PatternCandidate's Pattern.
 	 * 
-	 * @return MemberAbilities
+	 * @return an ArrayList of Strings which contains the Abilities of this PatternCandidate's Pattern.
 	 */
 	public ArrayList<String> getMemberAbilities() {
 		return MemberAbilities;
@@ -134,7 +135,7 @@ public class PatternCandidate {
 	/**
 	 * Sets an ArrayList of Strings which contains the Abilities of this PatternCandidate's Pattern.
 	 * 
-	 * @param memberAbilities
+	 * @param memberAbilities the ArrayList which contains the Abilities to be set to this PatternCandidate's Pattern.
 	 */
 	public void setMemberAbilities(ArrayList<String> memberAbilities) {
 		MemberAbilities = memberAbilities;

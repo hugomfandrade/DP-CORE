@@ -5,12 +5,8 @@ import java.util.ArrayList;
 import parser.ClassObject;
 
 /**
- * Represents Several PatternCandidates grouped up under a single dissimilarity. A SuperCandidate consists of 2
- * or more
+ * Represents Several PatternCandidates grouped up under a single dissimilarity. A SuperCandidate consists of 2 or more
  * PatternCandidates with 1 specific Ability being dissimilar.
- * 
- * @author Tony
- *
  */
 public class SuperCandidate extends PatternCandidate {
 
@@ -47,7 +43,7 @@ public class SuperCandidate extends PatternCandidate {
 	/**
 	 * Adds a PatternCandidate to this SuperCandidate.
 	 * 
-	 * @param c the PatternCandidate to be added
+	 * @param c the PatternCandidate to be added.
 	 */
 	public void addDissimilarMember(PatternCandidate c) {
 		Mergers.add(c);
@@ -78,7 +74,7 @@ public class SuperCandidate extends PatternCandidate {
 	/**
 	 * Returns an integer representing which Ability has the dissimilarity.
 	 * 
-	 * @return dissimilarity
+	 * @return an integer representing which Ability has the dissimilarity.
 	 */
 	public int getDissimilarity() {
 		return dissimilarity;
@@ -87,7 +83,7 @@ public class SuperCandidate extends PatternCandidate {
 	/**
 	 * Sets an integer representing which Ability has the dissimilarity.
 	 * 
-	 * @param dissimilarity
+	 * @param dissimilarity the Ability that has the dissimilarity.
 	 */
 	public void setDissimilarity(int dissimilarity) {
 		this.dissimilarity = dissimilarity;
@@ -96,7 +92,7 @@ public class SuperCandidate extends PatternCandidate {
 	/**
 	 * Returns an ArrayList with the ClassObjects this SuperCandidate consists of.
 	 * 
-	 * @return MergedMembers
+	 * @return an ArrayList with the ClassObjects this SuperCandidate consists of.
 	 */
 	public ArrayList<ClassObject> getMergedMembers() {
 		return MergedMembers;
@@ -105,7 +101,7 @@ public class SuperCandidate extends PatternCandidate {
 	/**
 	 * Sets an ArrayList with the ClassObjects this SuperCandidate consists of.
 	 * 
-	 * @param mergedMembers
+	 * @param mergedMembers the ArrayList with the ClassObjects this SuperCandidate consists of.
 	 */
 	public void setMergedMembers(ArrayList<ClassObject> mergedMembers) {
 		MergedMembers = mergedMembers;
@@ -114,7 +110,7 @@ public class SuperCandidate extends PatternCandidate {
 	/**
 	 * Returns an ArrayList with the PatternCandidates this SuperCandidate consists of.
 	 * 
-	 * @return Mergers
+	 * @return an ArrayList with the PatternCandidates this SuperCandidate consists of.
 	 */
 	public ArrayList<PatternCandidate> getMergers() {
 		return Mergers;
@@ -123,7 +119,7 @@ public class SuperCandidate extends PatternCandidate {
 	/**
 	 * Sets an ArrayList with the PatternCandidates this SuperCandidate consists of.
 	 * 
-	 * @param mergers
+	 * @param mergers the ArrayList with the PatternCandidates this SuperCandidate consists of.
 	 */
 	public void setMergers(ArrayList<PatternCandidate> mergers) {
 		Mergers = mergers;

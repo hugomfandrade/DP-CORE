@@ -8,9 +8,6 @@ import javax.swing.*;
 /**
  * Third and final window of the Pattern Creation Tool. Here the connections are defined.
  * After finalization a .pattern file with the given input is created at the patternfolder location.
- * 
- * @author Tony
- *
  */
 @SuppressWarnings("serial")
 public class ConnectionsWindow extends JDialog {
@@ -124,9 +121,6 @@ public class ConnectionsWindow extends JDialog {
 
 	/**
 	 * Event when OK button is pressed. If certain conditions are met, finishes the pattern creation process.
-	 * 
-	 * @author Tony
-	 *
 	 */
 	public class event_ok implements ActionListener {
 		@SuppressWarnings("rawtypes")
@@ -145,9 +139,6 @@ public class ConnectionsWindow extends JDialog {
 
 	/**
 	 * Event when Cancel button is pressed. A Yes/No Dialog appears asking for cancel confirmation.
-	 * 
-	 * @author Tony
-	 *
 	 */
 	public class event_cancel implements ActionListener {
 		@Override

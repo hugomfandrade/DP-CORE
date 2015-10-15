@@ -14,9 +14,6 @@ import javax.swing.JTextField;
 
 /**
  * This class implements a Component for browsing a file system for a folder.
- * 
- * @author Tony
- *
  */
 @SuppressWarnings("serial")
 public class JFilePicker extends JPanel {
@@ -106,9 +103,6 @@ public class JFilePicker extends JPanel {
 
 	/**
 	 * Textfield action when pressing enter
-	 * 
-	 * @author Tony
-	 *
 	 */
 	public class Action implements ActionListener {
 		@Override

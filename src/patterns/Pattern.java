@@ -28,12 +28,12 @@ public class Pattern {
 	}
 
 	/**
-	 * Creates and adds a Connection object to the Connection arraylist Connections
-	 * , defined by the input arguments. Input arguments are:
-	 * String s1 -> First member of Connection
-	 * enum Type t -> Connection type
-	 * String s2 -> Second member of Connection
-	 * eg. pattern.insert_connection("A", type.uses, "B")
+	 * Creates and adds a Connection object to the Connection arraylist Connections, defined by the input arguments.
+	 * Example call: insert_connection("A", type.uses, "B").
+	 * 
+	 * @param s1 first member of Connection.
+	 * @param t connection type.
+	 * @param s2 second member of Connection.
 	 */
 	public void insert_connection(String s1, Type t, String s2) {
 		int flag1 = 0;
@@ -75,11 +75,12 @@ public class Pattern {
 	}
 
 	/**
-	 * Adds a Pattern_Member and all its details to arraylist Members of this Pattern. Input arguments are:
-	 * String s1 -> Member name eg. "A"
-	 * enum Abstraction a -> Abstraction needed by this member --- Can be {Abstract}{Interface}{Abstracted}{Normal}{Any}
-	 * String s2 -> Member pattern name eg. "Concrete Factory"
-	 * eg. insert_member("A", Abstraction.Abstracted, "Abstract Factory")
+	 * Adds a Pattern_Member and all its details to arraylist Members of this Pattern.
+	 * Example call: insert_member("A", Abstraction.Abstracted, "Abstract Factory")
+	 * 
+	 * @param s1 member name e.g. "A".
+	 * @param a abstraction needed by this member, can be one of {Abstract, Interface, Abstracted, Normal, Any}.
+	 * @param s2 member pattern name e.g. "Concrete Factory".
 	 */
 	public void insert_member(String s1, Abstraction a, String s2) {
 		int flag1 = 0;

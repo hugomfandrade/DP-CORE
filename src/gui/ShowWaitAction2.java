@@ -17,9 +17,6 @@ import patterns.Pattern;
 /**
  * Action of the button Detect Pattern of mainWindow. It calls the BruteForce DetectPattern_Results function while
  * showing a please wait JDialog. When done, saves the results in a file at the specified exportfolder location.
- * 
- * @author Tony
- *
  */
 @SuppressWarnings("serial")
 public class ShowWaitAction2 extends AbstractAction {
@@ -34,8 +31,8 @@ public class ShowWaitAction2 extends AbstractAction {
 			@Override
 			protected Void doInBackground() throws Exception {
 				ProjectASTParser.parse(MainWindow.projectfolder);
-				File file = new File(
-						MainWindow.patternfolder + "\\" + MainWindow.cb.getSelectedItem().toString() + ".pattern");
+				File file = new File(MainWindow.patternfolder + "\\" + MainWindow.cb.getSelectedItem().toString()
+						+ ".pattern");
 				Pattern pat = MainWindow.extractPattern(file);
 				Boolean grouping;
 				if (MainWindow.grouping.isSelected())

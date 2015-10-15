@@ -8,9 +8,8 @@ import parser.ProjectASTParser;
 import parser.ClassObject.Abstraction;
 
 /**
- * Basic algorithm class. Its function DetectPattern(Pattern p) is responsible for
- * detecting patterns over the given code.
- * IMPORTANT: Need to parse the code and call finduses() etc for each ClassObject first.
+ * Basic algorithm class. Its function DetectPattern(Pattern p) is responsible for detecting patterns over the given
+ * code. IMPORTANT: Need to parse the code and call finduses() etc for each ClassObject first.
  */
 public class PatternDetectionAlgorithm {
 
@@ -27,12 +26,11 @@ public class PatternDetectionAlgorithm {
 	};
 
 	/**
-	 * Detects PatternCandidates and returns the results in a String.
-	 * Used mainly for gui purposes.
+	 * Detects PatternCandidates and returns the results in a String. Used mainly for gui purposes.
 	 * 
-	 * @param p the pattern to be exported in a string
-	 * @param grouping boolean indicating if grouping procedure will be applied on the results
-	 * @return Returns a string which represents the pattern's details. Can be written into a file as it is.
+	 * @param p the pattern to be exported in a string.
+	 * @param grouping boolean indicating if grouping procedure will be applied on the results.
+	 * @return a string which represents the pattern's details. Can be written into a file as it is.
 	 */
 	public static String DetectPattern_Results(Pattern p, Boolean grouping) {
 		DetectPatternFast(p);
@@ -50,7 +48,7 @@ public class PatternDetectionAlgorithm {
 	 * This fast version reduces the completion time by a large margin compared to its predecessor
 	 * DetectPattern(Pattern p) by cutting away branches of the detection tree closer to its root.
 	 * 
-	 * @param pattern Defines the pattern to be detected.
+	 * @param pattern defines the pattern to be detected.
 	 */
 	public static void DetectPatternFast(Pattern pattern) {
 		p = pattern;
@@ -65,9 +63,9 @@ public class PatternDetectionAlgorithm {
 	/**
 	 * Recursive function implementing moving deeper into the detection tree.
 	 * 
-	 * @param ClassObjects The ClassObject items not being used already at an higher node
-	 * @param CurrentCandidate The ClassObject items that have already been chosen for the pattern candidate
-	 * @param depth A number indicating the depth of the current node of the detection tree. Root is number 0.
+	 * @param ClassObjects the ClassObject items not being used already at an higher node.
+	 * @param CurrentCandidate the ClassObject items that have already been chosen for the pattern candidate.
+	 * @param depth a number indicating the depth of the current node of the detection tree. Root is number 0.
 	 */
 	private static void Recursive(ArrayList<ClassObject> ClassObjects, ArrayList<ClassObject> CurrentCandidate,
 			int depth) {
@@ -94,9 +92,9 @@ public class PatternDetectionAlgorithm {
 	/**
 	 * Function that checks if ClassObject o2's abstraction agrees with o1's abstraction.
 	 * 
-	 * @param o1 ClassObject that defines the necessary abstraction
-	 * @param o2 ClassObject whose abstraction will be checked
-	 * @return Returns true if ClassObject o2's abstraction agrees with o1's.
+	 * @param o1 ClassObject that defines the necessary abstraction.
+	 * @param o2 ClassObject whose abstraction will be checked.
+	 * @return true if ClassObject o2's abstraction agrees with o1's.
 	 */
 	private static Boolean AbstractionCheck(ClassObject o1, ClassObject o2) {
 		Abstraction abstraction1 = o1.get_abstraction();
@@ -115,11 +113,11 @@ public class PatternDetectionAlgorithm {
 	 * Checks if the given ClassObject satisfies the connections defined by the pattern,
 	 * to the ClassObjects given.
 	 * 
-	 * @param co ClassObject ArrayList with the ClassObject items already chosen as candidate parts
-	 * @param o The ClassObject to be checked
-	 * @param depth A number indicating the depth of the current node of the detection tree. Root is number 0.
-	 * @return Returns true if the input ClassObject of the specific depth contains
-	 *         the required connections to the previous ClassObjects in the ArrayList given.
+	 * @param co ClassObject ArrayList with the ClassObject items already chosen as candidate parts.
+	 * @param o The ClassObject to be checked.
+	 * @param depth a number indicating the depth of the current node of the detection tree. Root is number 0.
+	 * @return true if the input ClassObject of the specific depth contains the required connections to the previous
+	 *         ClassObjects in the ArrayList given.
 	 */
 	private static Boolean ConnectionsCheck(ArrayList<ClassObject> co, ClassObject o, int depth) {
 		for (Connection ac : p.get_Connections()) {
@@ -230,7 +228,6 @@ public class PatternDetectionAlgorithm {
 	/**
 	 * Finds all the SuperCandidates out of the PatternCandidates already detected.
 	 * This is the first step of the grouping procedure.
-	 * 
 	 */
 	public static void findSuperCandidates() {
 		ArrayList<SuperCandidate> SuperCandidates = new ArrayList<SuperCandidate>();
@@ -412,7 +409,6 @@ public class PatternDetectionAlgorithm {
 
 	/**
 	 * Prints the number of the SuperCandidates detected.
-	 * 
 	 */
 	public void PrintSuperCount() {
 		System.out.println("SuperCandidate count: " + TotalSuperCandidates.size());
@@ -420,7 +416,6 @@ public class PatternDetectionAlgorithm {
 
 	/**
 	 * Prints the SuperCandidates detected.
-	 * 
 	 */
 	public void PrintSuperCandidates() {
 		for (PatternCandidate e : TotalSuperCandidates) {
@@ -432,7 +427,6 @@ public class PatternDetectionAlgorithm {
 
 	/**
 	 * Prints the number of the HyperCandidates detected.
-	 * 
 	 */
 	public void PrintHyperCount() {
 		System.out.println("HyperCandidate count: " + TotalHyperCandidates.size());
@@ -440,7 +434,6 @@ public class PatternDetectionAlgorithm {
 
 	/**
 	 * Prints the HyperCandidates detected.
-	 * 
 	 */
 	public void PrintHyperCandidates() {
 		for (PatternCandidate e : TotalHyperCandidates) {
@@ -462,10 +455,10 @@ public class PatternDetectionAlgorithm {
 	}
 
 	/**
-	 * Prints the PatternCandidates found by the latest DetectPattern(Pattern p) (or Fast)
-	 * function into a String which is returned.
+	 * Prints the PatternCandidates found by the latest DetectPattern(Pattern p) (or Fast) function into a String which
+	 * is returned.
 	 * 
-	 * @return s: A string of the printed PatternCandidates detected.
+	 * @return a string of the printed PatternCandidates detected.
 	 */
 	private static String PatternCandidates_inaString() {
 		String s;
@@ -479,10 +472,9 @@ public class PatternDetectionAlgorithm {
 	}
 
 	/**
-	 * Prints the HyperCandidates, found by the grouping procedure,
-	 * into a String which is returned.
+	 * Prints the HyperCandidates, found by the grouping procedure, into a String which is returned.
 	 * 
-	 * @return s: A string of the printed PatternCandidates detected.
+	 * @return a string of the printed PatternCandidates detected.
 	 */
 	private static String HyperCandidates_inaString() {
 		String s;
@@ -497,7 +489,6 @@ public class PatternDetectionAlgorithm {
 
 	/**
 	 * Method to clear this PatternDetectionAlgorithm instance.
-	 * 
 	 */
 	public static void clear() {
 		Candidates.clear();

@@ -115,8 +115,6 @@ public class MainWindow extends JFrame {
 
 	/**
 	 * Pattern Creator Event
-	 * 
-	 * @author Tony
 	 */
 	public class event3 implements ActionListener {
 
@@ -159,8 +157,7 @@ public class MainWindow extends JFrame {
 				for (String n : narg.split("=")) {
 					col.add(n);
 				}
-			}
-			else
+			} else
 				col.add(arg.trim());
 		}
 		boolean sproject = false;
@@ -170,22 +167,19 @@ public class MainWindow extends JFrame {
 		String pattern = "";
 		String stringGroup = "";
 		for (String c : col) {
-			if (c.startsWith("-project")){
+			if (c.startsWith("-project")) {
 				sproject = true;
 				spattern = false;
 				sgroup = false;
-			}
-			else if (c.startsWith("-pattern")){
+			} else if (c.startsWith("-pattern")) {
 				sproject = false;
 				spattern = true;
 				sgroup = false;
-			}
-			else if (c.startsWith("-group")){
+			} else if (c.startsWith("-group")) {
 				sproject = false;
 				spattern = false;
 				sgroup = true;
-			}
-			else{
+			} else {
 				if (sproject)
 					project += c + " ";
 				else if (spattern)
@@ -196,7 +190,7 @@ public class MainWindow extends JFrame {
 		}
 		project = project.trim();
 		pattern = pattern.trim();
-		return new String[]{project.trim(), pattern.trim(), stringGroup.trim().toLowerCase()};
+		return new String[] { project.trim(), pattern.trim(), stringGroup.trim().toLowerCase() };
 	}
 
 	/**
@@ -212,7 +206,7 @@ public class MainWindow extends JFrame {
 			boolean group = true;
 			if (!(project.length() > 0 && pattern.length() > 0))
 				printHelpMessage();
-			else{
+			else {
 				if (arguments[2].length() > 0 && !(arguments[2].equals("true") || arguments[2].equals("false")))
 					printHelpMessage();
 				else {

@@ -5,12 +5,8 @@ import java.util.ArrayList;
 import parser.ClassObject;
 
 /**
- * Represents Several SuperCandidates or PatternCandidates grouped up under a double dissimilarity. A
- * HyperCandidate
- * consists of 2 or more SuperCandidates or PatternCandidates which share 2 specific dissimilarities in their
- * Abilities.
- * 
- * @author Tony
+ * Represents Several SuperCandidates or PatternCandidates grouped up under a double dissimilarity. A HyperCandidate
+ * consists of 2 or more SuperCandidates or PatternCandidates which share 2 specific dissimilarities in their Abilities.
  */
 public class HyperCandidate extends PatternCandidate {
 
@@ -80,7 +76,7 @@ public class HyperCandidate extends PatternCandidate {
 	/**
 	 * Adds a PatternCandidate or SuperCandidate to this HyperCandidate.
 	 * 
-	 * @param c the PatternCandidate or SuperCandidate to be added
+	 * @param c the PatternCandidate or SuperCandidate to be added.
 	 */
 	public void addHyperMember(PatternCandidate c) {
 		Mergers.add(c);
@@ -151,7 +147,7 @@ public class HyperCandidate extends PatternCandidate {
 	/**
 	 * Prints the members of this HyperCandidate and their respective roles into a String.
 	 * 
-	 * @return a String containing the members of this HyperCandidate
+	 * @return a String containing the members of this HyperCandidate.
 	 */
 	@Override
 	public String candidatetoString() {
@@ -192,7 +188,7 @@ public class HyperCandidate extends PatternCandidate {
 	/**
 	 * Returns an integer representing which Ability has the first dissimilarity.
 	 * 
-	 * @return dissimilarity1
+	 * @return an integer representing which Ability has the first dissimilarity.
 	 */
 	public int getDissimilarity1() {
 		return dissimilarity1;
@@ -201,7 +197,7 @@ public class HyperCandidate extends PatternCandidate {
 	/**
 	 * Sets an integer representing which Ability has the first dissimilarity.
 	 * 
-	 * @param dissimilarity
+	 * @param dissimilarity the Ability that has the first dissimilarity.
 	 */
 	public void setDissimilarity1(int dissimilarity) {
 		this.dissimilarity1 = dissimilarity;
@@ -210,7 +206,7 @@ public class HyperCandidate extends PatternCandidate {
 	/**
 	 * Returns an integer representing which Ability has the second dissimilarity.
 	 * 
-	 * @return dissimilarity2
+	 * @return an integer representing which Ability has the second dissimilarity.
 	 */
 	public int getDissimilarity2() {
 		return dissimilarity2;
@@ -219,7 +215,7 @@ public class HyperCandidate extends PatternCandidate {
 	/**
 	 * Sets an integer representing which Ability has the second dissimilarity.
 	 * 
-	 * @param dissimilarity
+	 * @param dissimilarity the Ability that has the second dissimilarity.
 	 */
 	public void setDissimilarity2(int dissimilarity) {
 		this.dissimilarity2 = dissimilarity;
@@ -228,7 +224,7 @@ public class HyperCandidate extends PatternCandidate {
 	/**
 	 * Returns an ArrayList with the PatternCandidates or SuperCandidates this HyperCandidate consists of.
 	 * 
-	 * @return Mergers
+	 * @return an ArrayList with the PatternCandidates or SuperCandidates this HyperCandidate consists of.
 	 */
 	public ArrayList<PatternCandidate> getMergers() {
 		return Mergers;
@@ -237,7 +233,7 @@ public class HyperCandidate extends PatternCandidate {
 	/**
 	 * Sets an ArrayList with the PatternCandidates or SuperCandidates this HyperCandidate consists of.
 	 * 
-	 * @param mergers
+	 * @param mergers the PatternCandidates or SuperCandidates this HyperCandidate consists of.
 	 */
 	public void setMergers(ArrayList<PatternCandidate> mergers) {
 		Mergers = mergers;
