@@ -42,10 +42,16 @@
 	</target>
 
 	<target name="dist" depends="compile,copyreadme,copypatterns,copyexamples" description="create the jar file">
+		<property name="version.num" value="0.1" />
+		<tstamp>
+			<format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
+		</tstamp>
 		<jar jarfile="${dist}/DPDHMMY.jar" basedir="${bin}">
 			<manifest>
 				<attribute name="Main-Class" value="gui.MainWindow" />
 				<attribute name="Class-Path" value="." />
+				<attribute name="Version" value="${version.num}" />
+				<attribute name="Built-Date" value="${TODAY}" />
 			</manifest>
 			<zipfileset excludes="META-INF/*.SF" src="${java.home}/../lib/tools.jar" />
 		</jar>
