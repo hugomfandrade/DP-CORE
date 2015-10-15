@@ -122,46 +122,49 @@ public class PatternDetectionAlgorithm {
 	private static Boolean ConnectionsCheck(ArrayList<ClassObject> co, ClassObject o, int depth) {
 		for (Connection ac : p.get_Connections()) {
 			Boolean flag = true;
-			if (ac.get_From().getName().equalsIgnoreCase(Character.toString((char) (65 + depth)))
-					&& ((int) (ac.get_To().getName().toCharArray()[0]) - 65) < depth) {
+			int fromPatternConnectionId = (int) ac.get_From().getName().toCharArray()[0] - 65;
+			int toPatternConnectionId = (int) ac.get_To().getName().toCharArray()[0] - 65;
+			int fromClassObjectId = (int) (ac.get_From().getName()).toCharArray()[0] - 65;
+			int toClassObjectId = (int) (ac.get_To().getName().toCharArray()[0]) - 65;
+			if (fromPatternConnectionId == depth && toClassObjectId < depth) {
 				switch (ac.get_type()) {
 				case has:
-					if (!(o.has(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))) {
+					if (!(o.has(co.get(toClassObjectId)))) {
 						flag = false;
 					}
 					break;
 				case use:
-					if (!(o.uses(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))) {
+					if (!(o.uses(co.get(toClassObjectId)))) {
 						flag = false;
 					}
 					break;
 				case inh:
-					if (!(o.inherits(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))) {
+					if (!(o.inherits(co.get(toClassObjectId)))) {
 						flag = false;
 					}
 					break;
 				case ref:
-					if (!(o.references(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))) {
+					if (!(o.references(co.get(toClassObjectId)))) {
 						flag = false;
 					}
 					break;
 				case create:
-					if (!(o.creates(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))) {
+					if (!(o.creates(co.get(toClassObjectId)))) {
 						flag = false;
 					}
 					break;
 				case call:
-					if (!(o.calls(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))) {
+					if (!(o.calls(co.get(toClassObjectId)))) {
 						flag = false;
 					}
 					break;
 				case wildcard:
-					if (!(o.has(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))
-							&& !(o.uses(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))
-							&& !(o.inherits(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))
-							&& !(o.references(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))
-							&& !(o.creates(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))
-							&& !(o.calls(co.get((int) (ac.get_To().getName()).toCharArray()[0] - 65)))) {
+					if (!(o.has(co.get(toClassObjectId)))
+							&& !(o.uses(co.get(toClassObjectId)))
+							&& !(o.inherits(co.get(toClassObjectId)))
+							&& !(o.references(co.get(toClassObjectId)))
+							&& !(o.creates(co.get(toClassObjectId)))
+							&& !(o.calls(co.get(toClassObjectId)))) {
 						flag = false;
 					}
 					break;
@@ -170,46 +173,45 @@ public class PatternDetectionAlgorithm {
 					System.exit(0);
 					break;
 				}
-			} else if (ac.get_To().getName().equalsIgnoreCase(Character.toString((char) (65 + depth)))
-					&& ((int) (ac.get_From().getName().toCharArray()[0]) - 65) < depth) {
+			} else if (toPatternConnectionId == depth && fromClassObjectId < depth) {
 				switch (ac.get_type()) {
 				case has:
-					if (!(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).has(o)) {
+					if (!(co.get(fromClassObjectId)).has(o)) {
 						flag = false;
 					}
 					break;
 				case use:
-					if (!(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).uses(o)) {
+					if (!(co.get(fromClassObjectId)).uses(o)) {
 						flag = false;
 					}
 					break;
 				case inh:
-					if (!(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).inherits(o)) {
+					if (!(co.get(fromClassObjectId)).inherits(o)) {
 						flag = false;
 					}
 					break;
 				case ref:
-					if (!(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).references(o)) {
+					if (!(co.get(fromClassObjectId)).references(o)) {
 						flag = false;
 					}
 					break;
 				case create:
-					if (!(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).creates(o)) {
+					if (!(co.get(fromClassObjectId)).creates(o)) {
 						flag = false;
 					}
 					break;
 				case call:
-					if (!(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).calls(o)) {
+					if (!(co.get(fromClassObjectId)).calls(o)) {
 						flag = false;
 					}
 					break;
 				case wildcard:
-					if (!(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).has(o)
-							&& !(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).uses(o)
-							&& !(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).inherits(o)
-							&& !(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).references(o)
-							&& !(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).creates(o)
-							&& !(co.get((int) (ac.get_From().getName()).toCharArray()[0] - 65)).calls(o)) {
+					if (!(co.get(fromClassObjectId)).has(o)
+							&& !(co.get(fromClassObjectId)).uses(o)
+							&& !(co.get(fromClassObjectId)).inherits(o)
+							&& !(co.get(fromClassObjectId)).references(o)
+							&& !(co.get(fromClassObjectId)).creates(o)
+							&& !(co.get(fromClassObjectId)).calls(o)) {
 						flag = false;
 					}
 					break;
