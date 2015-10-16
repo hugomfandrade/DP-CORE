@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import parser.ClassObject;
 import parser.Connection;
+import parser.Connection.Type;
 import parser.ProjectASTParser;
 import parser.ClassObject.Abstraction;
 
@@ -121,108 +122,47 @@ public class PatternDetectionAlgorithm {
 	 */
 	private static Boolean ConnectionsCheck(ArrayList<ClassObject> co, ClassObject o, int depth) {
 		for (Connection ac : p.get_Connections()) {
-			Boolean flag = true;
-			int fromPatternConnectionId = (int) ac.get_From().getName().toCharArray()[0] - 65;
-			int toPatternConnectionId = (int) ac.get_To().getName().toCharArray()[0] - 65;
-			int fromClassObjectId = (int) (ac.get_From().getName()).toCharArray()[0] - 65;
-			int toClassObjectId = (int) (ac.get_To().getName().toCharArray()[0]) - 65;
+			int fromPatternConnectionId = ac.getFrom().getId();
+			int toPatternConnectionId = ac.getTo().getId();
+			int fromClassObjectId = ac.getFrom().getId();
+			int toClassObjectId = ac.getTo().getId();
 			if (fromPatternConnectionId == depth && toClassObjectId < depth) {
-				switch (ac.get_type()) {
-				case has:
-					if (!(o.has(co.get(toClassObjectId)))) {
-						flag = false;
-					}
-					break;
-				case use:
-					if (!(o.uses(co.get(toClassObjectId)))) {
-						flag = false;
-					}
-					break;
-				case inh:
-					if (!(o.inherits(co.get(toClassObjectId)))) {
-						flag = false;
-					}
-					break;
-				case ref:
-					if (!(o.references(co.get(toClassObjectId)))) {
-						flag = false;
-					}
-					break;
-				case create:
-					if (!(o.creates(co.get(toClassObjectId)))) {
-						flag = false;
-					}
-					break;
-				case call:
-					if (!(o.calls(co.get(toClassObjectId)))) {
-						flag = false;
-					}
-					break;
-				case wildcard:
-					if (!(o.has(co.get(toClassObjectId)))
-							&& !(o.uses(co.get(toClassObjectId)))
-							&& !(o.inherits(co.get(toClassObjectId)))
-							&& !(o.references(co.get(toClassObjectId)))
-							&& !(o.creates(co.get(toClassObjectId)))
-							&& !(o.calls(co.get(toClassObjectId)))) {
-						flag = false;
-					}
-					break;
-				default:
-					System.out.println("ERROR!");
-					System.exit(0);
-					break;
-				}
+				ClassObject toClassObject = co.get(toClassObjectId);
+				if (ac.hasType(Type.has) && !o.has(toClassObject))
+					return false;
+				else if (ac.hasType(Type.uses) && !o.uses(toClassObject))
+					return false;
+				else if (ac.hasType(Type.inherits) && !o.inherits(toClassObject))
+					return false;
+				else if (ac.hasType(Type.uses) && !o.uses(toClassObject))
+					return false;
+				else if (ac.hasType(Type.references) && !o.references(toClassObject))
+					return false;
+				else if (ac.hasType(Type.creates) && !o.creates(toClassObject))
+					return false;
+				else if (ac.hasType(Type.calls) && !o.calls(toClassObject))
+					return false;
+				else if (ac.hasType(Type.relates) && !o.relates(toClassObject))
+					return false;
 			} else if (toPatternConnectionId == depth && fromClassObjectId < depth) {
-				switch (ac.get_type()) {
-				case has:
-					if (!(co.get(fromClassObjectId)).has(o)) {
-						flag = false;
-					}
-					break;
-				case use:
-					if (!(co.get(fromClassObjectId)).uses(o)) {
-						flag = false;
-					}
-					break;
-				case inh:
-					if (!(co.get(fromClassObjectId)).inherits(o)) {
-						flag = false;
-					}
-					break;
-				case ref:
-					if (!(co.get(fromClassObjectId)).references(o)) {
-						flag = false;
-					}
-					break;
-				case create:
-					if (!(co.get(fromClassObjectId)).creates(o)) {
-						flag = false;
-					}
-					break;
-				case call:
-					if (!(co.get(fromClassObjectId)).calls(o)) {
-						flag = false;
-					}
-					break;
-				case wildcard:
-					if (!(co.get(fromClassObjectId)).has(o)
-							&& !(co.get(fromClassObjectId)).uses(o)
-							&& !(co.get(fromClassObjectId)).inherits(o)
-							&& !(co.get(fromClassObjectId)).references(o)
-							&& !(co.get(fromClassObjectId)).creates(o)
-							&& !(co.get(fromClassObjectId)).calls(o)) {
-						flag = false;
-					}
-					break;
-				default:
-					System.out.println("ERROR!");
-					System.exit(0);
-					break;
-				}
+				ClassObject fromClassObject = co.get(fromClassObjectId);
+				if (ac.hasType(Type.has) && !fromClassObject.has(o))
+					return false;
+				else if (ac.hasType(Type.uses) && !fromClassObject.uses(o))
+					return false;
+				else if (ac.hasType(Type.inherits) && !fromClassObject.inherits(o))
+					return false;
+				else if (ac.hasType(Type.uses) && !fromClassObject.uses(o))
+					return false;
+				else if (ac.hasType(Type.references) && !fromClassObject.references(o))
+					return false;
+				else if (ac.hasType(Type.creates) && !fromClassObject.creates(o))
+					return false;
+				else if (ac.hasType(Type.calls) && !fromClassObject.calls(o))
+					return false;
+				else if (ac.hasType(Type.relates) && !fromClassObject.relates(o))
+					return false;
 			}
-			if (flag == false)
-				return false;
 		}
 		return true;
 	}

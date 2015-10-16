@@ -6,7 +6,7 @@ import parser.Connection.Type;
 
 /**
  * Extends ArrayList<Connection> to hold up Connection objects we find.
- *
+ * 
  */
 @SuppressWarnings("serial")
 public class Connections extends ArrayList<Connection> {
@@ -19,7 +19,7 @@ public class Connections extends ArrayList<Connection> {
 	public ArrayList<Connection> getConnectionsByType(Type type) {
 		ArrayList<Connection> filteredConnections = new ArrayList<Connection>();
 		for (Connection connection : this) {
-			if (connection.get_type() == type)
+			if (connection.hasType(type))
 				filteredConnections.add(connection);
 		}
 		return filteredConnections;

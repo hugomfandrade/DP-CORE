@@ -341,8 +341,8 @@ public class ProjectASTParser {
 	 */
 	public static void print_uses(ClassObject c) {
 		// Print uses
-		for (Connection s : c.getConnections(Type.use)) {
-			ClassObject c1 = s.get_To();
+		for (Connection s : c.getConnections(Type.uses)) {
+			ClassObject c1 = s.getTo();
 			System.out.println(c.get_abstraction() + " " + c.getName() + " uses " + c1.get_abstraction() + " "
 					+ c1.getName());
 		}
@@ -355,8 +355,8 @@ public class ProjectASTParser {
 	 */
 	public static void print_inherits(ClassObject c) {
 		// Print inherits
-		for (Connection s : c.getConnections(Type.inh)) {
-			ClassObject c1 = s.get_To();
+		for (Connection s : c.getConnections(Type.inherits)) {
+			ClassObject c1 = s.getTo();
 			System.out.println(c.get_abstraction() + " " + c.getName() + " inherits " + c1.get_abstraction() + " "
 					+ c1.getName());
 		}
@@ -370,7 +370,7 @@ public class ProjectASTParser {
 	public static void print_has(ClassObject c) {
 		// Print has
 		for (Connection s : c.getConnections(Type.has)) {
-			ClassObject c1 = s.get_To();
+			ClassObject c1 = s.getTo();
 			System.out.println(c.get_abstraction() + " " + c.getName() + " has " + c1.get_abstraction() + " "
 					+ c1.getName());
 		}
@@ -383,8 +383,8 @@ public class ProjectASTParser {
 	 */
 	public static void print_references(ClassObject c) {
 		// Print references
-		for (Connection s : c.getConnections(Type.ref)) {
-			ClassObject c1 = s.get_To();
+		for (Connection s : c.getConnections(Type.references)) {
+			ClassObject c1 = s.getTo();
 			System.out.println(c.get_abstraction() + " " + c.getName() + " references " + c1.get_abstraction() + " "
 					+ c1.getName());
 		}
@@ -397,8 +397,8 @@ public class ProjectASTParser {
 	 */
 	public static void print_calls(ClassObject c) {
 		// Print calls
-		for (Connection s : c.getConnections(Type.call)) {
-			ClassObject c1 = s.get_To();
+		for (Connection s : c.getConnections(Type.calls)) {
+			ClassObject c1 = s.getTo();
 			System.out.println(c.get_abstraction() + " " + c.getName() + " calls " + c1.get_abstraction() + " "
 					+ c1.getName());
 		}
@@ -411,8 +411,8 @@ public class ProjectASTParser {
 	 */
 	public static void print_creates(ClassObject c) {
 		// Print creates
-		for (Connection s : c.getConnections(Type.create)) {
-			ClassObject c1 = s.get_To();
+		for (Connection s : c.getConnections(Type.creates)) {
+			ClassObject c1 = s.getTo();
 			System.out.println(c.get_abstraction() + " " + c.getName() + " creates " + c1.get_abstraction() + " "
 					+ c1.getName());
 		}

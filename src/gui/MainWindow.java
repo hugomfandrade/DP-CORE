@@ -328,20 +328,20 @@ public class MainWindow extends JFrame {
 		Connection.Type t;
 		switch (string) {
 		case "uses":
-			t = Connection.Type.use;
+			t = Connection.Type.uses;
 			break;
 		case "inherits":
-			t = Connection.Type.inh;
+			t = Connection.Type.inherits;
 			break;
 		case "creates":
-			t = Connection.Type.create;
+			t = Connection.Type.creates;
 			break;
 		// Either interface or abstract
 		case "calls":
-			t = Connection.Type.call;
+			t = Connection.Type.calls;
 			break;
 		case "references":
-			t = Connection.Type.ref;
+			t = Connection.Type.references;
 			break;
 		case "has":
 			t = Connection.Type.has;
@@ -399,7 +399,7 @@ public class MainWindow extends JFrame {
 			}
 			writer.println("End_Members");
 			for (Connection c : p.get_Connections()) {
-				writer.println(c.get_From().getName() + " " + c.getType() + " " + c.get_To().getName());
+				writer.println(c.getFrom().getName() + " " + c.getType() + " " + c.getTo().getName());
 			}
 			writer.println("End_Connections");
 			writer.close();

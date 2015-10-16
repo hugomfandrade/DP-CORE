@@ -6,7 +6,7 @@ import parser.Connection.Type;
 
 /**
  * Represents a class. This is the main object of this project.
- *
+ * 
  */
 public class ClassObject {
 
@@ -37,6 +37,10 @@ public class ClassObject {
 	}
 
 	// GETS
+
+	public int getId() {
+		return name.toCharArray()[0] - 65;
+	}
 
 	/**
 	 * Returns this ClassObject's name as a string
@@ -259,7 +263,7 @@ public class ClassObject {
 		Connection tempuse;
 		for (Method m : Methods) {
 			if (!(GeneralMethods.isPrimitive(m.getReturntype()))) {
-				tempuse = new Connection(this, ProjectASTParser.Classes.get(m.getReturntype()), Type.use);
+				tempuse = new Connection(this, ProjectASTParser.Classes.get(m.getReturntype()), Type.uses);
 				connections.add(tempuse);
 			}
 		}
@@ -270,12 +274,13 @@ public class ClassObject {
 	 * returns false otherwise
 	 */
 	public boolean uses(ClassObject c) {
-		for (Connection u : connections.getConnectionsByType(Type.use)) {
-			if (u.get_To().equals(c))
+		for (Connection u : connections.getConnectionsByType(Type.uses)) {
+			if (u.getTo().equals(c))
 				return true;
 		}
 		return false;
 	}
+
 	// ------------------------------------ Uses ----------------------------------------
 
 	// ------------------------------------ Inherits ----------------------------------------
@@ -289,12 +294,12 @@ public class ClassObject {
 	public void findInherits() {
 		Connection tempinh;
 		if (extending != null) {
-			tempinh = new Connection(this, ProjectASTParser.Classes.get(extending), Type.inh);
+			tempinh = new Connection(this, ProjectASTParser.Classes.get(extending), Type.inherits);
 			connections.add(tempinh);
 		}
 		for (String s : Implementing) {
 			if (s != null) {
-				tempinh = new Connection(this, ProjectASTParser.Classes.get(s), Type.inh);
+				tempinh = new Connection(this, ProjectASTParser.Classes.get(s), Type.inherits);
 				connections.add(tempinh);
 			}
 		}
@@ -306,12 +311,13 @@ public class ClassObject {
 	 * returns false otherwise
 	 */
 	public boolean inherits(ClassObject c) {
-		for (Connection i : connections.getConnectionsByType(Type.inh)) {
-			if (i.get_To().equals(c))
+		for (Connection i : connections.getConnectionsByType(Type.inherits)) {
+			if (i.getTo().equals(c))
 				return true;
 		}
 		return false;
 	}
+
 	// ------------------------------------ Inherits ----------------------------------------
 
 	// ------------------------------------ Has ----------------------------------------
@@ -331,7 +337,7 @@ public class ClassObject {
 			if (ProjectASTParser.Classes.containsKey(s)) {
 				// Check for duplicates (one has is enough)
 				for (Connection h : connections.getConnectionsByType(Type.has)) {
-					if (h.get_To().getName().equalsIgnoreCase(s))
+					if (h.getTo().getName().equalsIgnoreCase(s))
 						flag = 1;
 				}
 				// End of duplicate checking
@@ -350,11 +356,12 @@ public class ClassObject {
 	 */
 	public boolean has(ClassObject c) {
 		for (Connection h : connections.getConnectionsByType(Type.has)) {
-			if (h.get_To().equals(c))
+			if (h.getTo().equals(c))
 				return true;
 		}
 		return false;
 	}
+
 	// ------------------------------------ Has ----------------------------------------
 
 	// ------------------------------------ Calls ----------------------------------------
@@ -380,14 +387,14 @@ public class ClassObject {
 							for (Method m : c.getMethods()) {
 								if (words[i + 1].equals(m.getName()) && (v.gettype().equals(c.getName()))) {
 									// Check for duplicates (one calls is enough)
-									for (Connection ca : connections.getConnectionsByType(Type.call)) {
-										if (ca.get_To().getName().equalsIgnoreCase(c.getName()))
+									for (Connection ca : connections.getConnectionsByType(Type.calls)) {
+										if (ca.getTo().getName().equalsIgnoreCase(c.getName()))
 											flag = 1;
 									}
 									// End of duplicate checking
 									// If it is not duplicate (flag is 0)
 									if (flag == 0) {
-										tempcall = new Connection(this, c, Type.call);
+										tempcall = new Connection(this, c, Type.calls);
 										connections.add(tempcall);
 									}
 								}
@@ -406,12 +413,13 @@ public class ClassObject {
 	 * returns false otherwise
 	 */
 	public boolean calls(ClassObject c) {
-		for (Connection cll : connections.getConnectionsByType(Type.call)) {
-			if (cll.get_To().equals(c))
+		for (Connection cll : connections.getConnectionsByType(Type.calls)) {
+			if (cll.getTo().equals(c))
 				return true;
 		}
 		return false;
 	}
+
 	// ------------------------------------ Calls ----------------------------------------
 
 	// ------------------------------------ Creates ----------------------------------------
@@ -429,14 +437,14 @@ public class ClassObject {
 			flag = 0;
 			if (ProjectASTParser.Classes.containsKey(s)) {
 				// Check for duplicates (one create is enough)
-				for (Connection c : connections.getConnectionsByType(Type.create)) {
-					if (c.get_To().getName().equalsIgnoreCase(s))
+				for (Connection c : connections.getConnectionsByType(Type.creates)) {
+					if (c.getTo().getName().equalsIgnoreCase(s))
 						flag = 1;
 				}
 				// End of duplicate checking
 				// If it is not duplicate (flag is 0)
 				if (flag == 0) {
-					tempcreate = new Connection(this, ProjectASTParser.Classes.get(s), Type.create);
+					tempcreate = new Connection(this, ProjectASTParser.Classes.get(s), Type.creates);
 					connections.add(tempcreate);
 				}
 			}
@@ -449,12 +457,13 @@ public class ClassObject {
 	 * returns false otherwise
 	 */
 	public boolean creates(ClassObject c) {
-		for (Connection cr : connections.getConnectionsByType(Type.create)) {
-			if (cr.get_To().equals(c))
+		for (Connection cr : connections.getConnectionsByType(Type.creates)) {
+			if (cr.getTo().equals(c))
 				return true;
 		}
 		return false;
 	}
+
 	// ------------------------------------ Creates ----------------------------------------
 
 	// ------------------------------------ References ----------------------------------------
@@ -473,14 +482,14 @@ public class ClassObject {
 				flag = 0;
 				if (!(GeneralMethods.isPrimitive(s))) {
 					// Check for duplicates (one reference is enough)
-					for (Connection r : connections.getConnectionsByType(Type.ref)) {
-						if (r.get_To().getName().equalsIgnoreCase(s))
+					for (Connection r : connections.getConnectionsByType(Type.references)) {
+						if (r.getTo().getName().equalsIgnoreCase(s))
 							flag = 1;
 					}
 					// End of duplicate checking
 					// If it is not duplicate (flag is 0)
 					if (flag == 0) {
-						tempref = new Connection(this, ProjectASTParser.Classes.get(s), Type.ref);
+						tempref = new Connection(this, ProjectASTParser.Classes.get(s), Type.references);
 						connections.add(tempref);
 					}
 				}
@@ -493,11 +502,19 @@ public class ClassObject {
 	 * returns false otherwise
 	 */
 	public boolean references(ClassObject c) {
-		for (Connection r : connections.getConnectionsByType(Type.ref)) {
-			if (r.get_To().equals(c))
+		for (Connection r : connections.getConnectionsByType(Type.references)) {
+			if (r.getTo().equals(c))
 				return true;
 		}
 		return false;
 	}
 	// ------------------------------------ References ----------------------------------------
+
+	public boolean relates(ClassObject c) {
+		for (Connection r : connections) {
+			if (r.getTo().equals(c))
+				return true;
+		}
+		return false;
+	}
 }
