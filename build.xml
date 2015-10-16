@@ -39,6 +39,7 @@
 
 	<target name="copyreadme" depends="initdist" description="copy the examples folder">
 		<copy file="README.md" tofile="${dist}/readme.txt" />
+		<copy file="LICENSE.md" tofile="${dist}/license.txt" />
 	</target>
 
 	<target name="dist" depends="compile,copyreadme,copypatterns,copyexamples" description="create the jar file">
