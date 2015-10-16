@@ -47,7 +47,7 @@ public class ConnectionsWindow extends JDialog {
 		label3.setLocation(250, 15);
 		add(label3);
 
-		String[] choices = { "uses", "inherits", "references", "has", "calls", "creates" };
+		String[] choices = { "uses", "inherits", "references", "has", "calls", "creates", "relates" };
 
 		for (int i = 0; i < MainWindow.MemberNum; i++) {
 			Members.add(Character.toString((char) (65 + i)));
