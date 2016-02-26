@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project name="DPDHMMY" default="dist" basedir=".">
+<project name="DP-CORE" default="dist" basedir=".">
 
 	<description>
-		DPDHMMY: A Design Pattern Detection Tool for Code Reuse
+		DP-CORE: A Design Pattern Detection Tool for Code Reuse
 	</description>
 
 	<property name="src" location="src" />
@@ -47,7 +47,7 @@
 	</target>
 
 	<target name="dist" depends="compile,copyreadme,copypatterns,copyexamples" description="create the jar file">
-		<jar jarfile="${dist}/DPDHMMY.jar" basedir="${bin}">
+		<jar jarfile="${dist}/DP-CORE.jar" basedir="${bin}">
 			<manifest>
 				<attribute name="Main-Class" value="gui.MainWindow" />
 				<attribute name="Class-Path" value="." />
@@ -59,7 +59,7 @@
 	</target>
 
 	<target name="createziprelease" depends="dist" description="create the zip file of the release">
-		<zip destfile="${dist}/DPDHMMY_v${version.num}.zip">
+		<zip destfile="${dist}/DP-CORE_v${version.num}.zip">
 			<zipfileset dir="${dist}" excludes="*.zip" />
 		</zip>
 	</target>

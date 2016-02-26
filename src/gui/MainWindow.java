@@ -136,9 +136,9 @@ public class MainWindow extends JFrame {
 	 * Prints the help message of the command line interface.
 	 */
 	private static void printHelpMessage() {
-		System.out.println("DPDHMMY: Design Pattern Detection Tool for Code Reuse\n"
+		System.out.println("DP-CORE: Design Pattern Detection Tool for Code Reuse\n"
 				+ "Run without arguments for GUI mode.\n" + "");
-		System.out.println("For batch mode run as\njava -jar DPDHMMY.jar -project=\"path/to/project\" "
+		System.out.println("For batch mode run as\njava -jar DP-CORE.jar -project=\"path/to/project\" "
 				+ "-pattern=\"path/to/pattern\" -group=true|false where the last argument allows "
 				+ "grouping in hypercandidates (default is true)");
 	}
@@ -231,7 +231,7 @@ public class MainWindow extends JFrame {
 			gui.setResizable(false);
 			gui.setLocationRelativeTo(null);
 			gui.setVisible(true);
-			gui.setTitle("DPDHMMY");
+			gui.setTitle("DP-CORE");
 		}
 	}
 
