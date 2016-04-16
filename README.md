@@ -3,6 +3,13 @@ DP-CORE: A Design Pattern Detection Tool for Code Reuse
 DP-CORE is a Design Pattern Detection tool designed for code reuse.
 It allows execution in two modes, GUI mode, and batch (command line) mode.
 
+You can cite DP-CORE by citing the following publication:
+```
+Themistoklis Diamantopoulos, Antonis Noutsos, and Andreas Symeonidis. "DP-CORE: A Design Pattern
+Detection Tool for Code Reuse." To appear in Proceedings of the Sixth International Symposium on
+Business Modeling and Software Design, BMSD 2016.
+```
+
 Executing in GUI mode
 ---------------------
 Double click on the jar file.
