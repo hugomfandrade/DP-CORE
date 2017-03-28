@@ -29,17 +29,17 @@ public class MemberWindow extends JDialog {
 
 		label1 = new JLabel("Members");
 		label1.setSize(130, 25);
-		label1.setLocation(20, 15);
+		label1.setLocation(15, 15);
 		add(label1);
 
 		label2 = new JLabel("Abilities");
 		label2.setSize(130, 25);
-		label2.setLocation(160, 15);
+		label2.setLocation(150, 15);
 		add(label2);
 
 		label3 = new JLabel("Abstraction");
 		label3.setSize(130, 25);
-		label3.setLocation(315, 15);
+		label3.setLocation(305, 15);
 		add(label3);
 
 		String[] choices = { "Abstract", "Interface", "Abstracted", "Normal", "Any" };
@@ -49,8 +49,8 @@ public class MemberWindow extends JDialog {
 			textFieldList.get(i).setSize(200, 25);
 			textFieldList.get(i).setLocation(75, 50 + i * 40);
 			cbList.add(new JComboBox<String>(choices));
-			cbList.get(i).setSize(85, 25);
-			cbList.get(i).setLocation(300, 50 + i * 40);
+			cbList.get(i).setSize(93, 25);
+			cbList.get(i).setLocation(292, 50 + i * 40);
 			((JComboBox<String>) cbList.get(i)).setEditable(true);
 			((JComboBox<String>) cbList.get(i)).getEditor().getEditorComponent().setFocusable(false);
 		}
@@ -68,12 +68,12 @@ public class MemberWindow extends JDialog {
 		}
 
 		ok = new JButton("OK");
-		ok.setSize(80, 25);
-		ok.setLocation(200, 50 + 40 * MainWindow.MemberNum);
+		ok.setSize(90, 25);
+		ok.setLocation(190, 50 + 40 * MainWindow.MemberNum);
 		add(ok);
 
 		cancel = new JButton("CANCEL");
-		cancel.setSize(80, 25);
+		cancel.setSize(90, 25);
 		cancel.setLocation(290, 50 + 40 * MainWindow.MemberNum);
 		add(cancel);
 

@@ -26,7 +26,7 @@ public class ConnectionsWindow extends JDialog {
 		int a = 110;
 		int b = 40;
 		int y = a + MainWindow.ConnNum * b;
-		setSize(300, y);
+		setSize(345, y);
 		setTitle("Pattern Creator: Connections");
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -34,17 +34,17 @@ public class ConnectionsWindow extends JDialog {
 
 		label1 = new JLabel("From");
 		label1.setSize(130, 25);
-		label1.setLocation(20, 15);
+		label1.setLocation(30, 15);
 		add(label1);
 
 		label2 = new JLabel("Connection Type");
 		label2.setSize(130, 25);
-		label2.setLocation(105, 15);
+		label2.setLocation(125, 15);
 		add(label2);
 
 		label3 = new JLabel("To");
 		label3.setSize(130, 25);
-		label3.setLocation(250, 15);
+		label3.setLocation(280, 15);
 		add(label3);
 
 		String[] choices = { "uses", "inherits", "references", "has", "calls", "creates", "relates" };
@@ -61,17 +61,17 @@ public class ConnectionsWindow extends JDialog {
 		for (int i = 0; i < MainWindow.ConnNum; i++) {
 			cbList1.add(new JComboBox<String>(Mem));
 			cbList1.get(i).setSize(40, 25);
-			cbList1.get(i).setLocation(15, 40 + i * 40);
+			cbList1.get(i).setLocation(25, 40 + i * 40);
 			((JComboBox<String>) cbList1.get(i)).setEditable(true);
 			((JComboBox<String>) cbList1.get(i)).getEditor().getEditorComponent().setFocusable(false);
 			cbList2.add(new JComboBox<String>(choices));
 			cbList2.get(i).setSize(150, 25);
-			cbList2.get(i).setLocation(75, 40 + i * 40);
+			cbList2.get(i).setLocation(95, 40 + i * 40);
 			((JComboBox<String>) cbList2.get(i)).setEditable(true);
 			((JComboBox<String>) cbList2.get(i)).getEditor().getEditorComponent().setFocusable(false);
 			cbList3.add(new JComboBox<String>(Mem));
 			cbList3.get(i).setSize(40, 25);
-			cbList3.get(i).setLocation(245, 40 + i * 40);
+			cbList3.get(i).setLocation(275, 40 + i * 40);
 			((JComboBox<String>) cbList3.get(i)).setEditable(true);
 			((JComboBox<String>) cbList3.get(i)).getEditor().getEditorComponent().setFocusable(false);
 		}
@@ -88,12 +88,12 @@ public class ConnectionsWindow extends JDialog {
 		}
 
 		ok = new JButton("OK");
-		ok.setSize(80, 25);
-		ok.setLocation(110, 50 + 40 * MainWindow.ConnNum);
+		ok.setSize(90, 25);
+		ok.setLocation(100, 50 + 40 * MainWindow.ConnNum);
 		add(ok);
 
 		cancel = new JButton("CANCEL");
-		cancel.setSize(80, 25);
+		cancel.setSize(90, 25);
 		cancel.setLocation(200, 50 + 40 * MainWindow.ConnNum);
 		add(cancel);
 
@@ -131,7 +131,7 @@ public class ConnectionsWindow extends JDialog {
 						MainWindow.StringtoConnectionType(((JComboBox) cbList2.get(i)).getSelectedItem().toString()),
 						((JComboBox) cbList3.get(i)).getSelectedItem().toString());
 			}
-			File file = new File(MainWindow.patternfolder + "\\" + MainWindow.p.get_name() + ".pattern");
+			File file = new File(MainWindow.patternfolder + File.separator + MainWindow.p.get_name() + ".pattern");
 			MainWindow.createPatternFile(MainWindow.p, file);
 			dispose();
 		}

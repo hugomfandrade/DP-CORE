@@ -32,7 +32,7 @@ class ShowWaitAction extends AbstractAction {
 		};
 
 		Window win = SwingUtilities.getWindowAncestor((AbstractButton) evt.getSource());
-		final JDialog dialog = new JDialog(win, "Dialog", ModalityType.APPLICATION_MODAL);
+		final JDialog dialog = new JDialog(win, "Working", ModalityType.APPLICATION_MODAL);
 
 		mySwingWorker.addPropertyChangeListener(new PropertyChangeListener() {
 

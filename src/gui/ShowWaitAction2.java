@@ -31,7 +31,7 @@ public class ShowWaitAction2 extends AbstractAction {
 			@Override
 			protected Void doInBackground() throws Exception {
 				ProjectASTParser.parse(MainWindow.projectfolder);
-				File file = new File(MainWindow.patternfolder + "\\" + MainWindow.cb.getSelectedItem().toString()
+				File file = new File(MainWindow.patternfolder + File.separator + MainWindow.cb.getSelectedItem().toString()
 						+ ".pattern");
 				Pattern pat = MainWindow.extractPattern(file);
 				Boolean grouping;
@@ -41,7 +41,7 @@ public class ShowWaitAction2 extends AbstractAction {
 					grouping = false;
 				String s = PatternDetectionAlgorithm.DetectPattern_Results(pat, grouping);
 				File fileEntry = new File(MainWindow.projectfolder);
-				String s2 = MainWindow.exportfolder + "\\detect_" + MainWindow.cb.getSelectedItem().toString()
+				String s2 = MainWindow.exportfolder + File.separator + "detect_" + MainWindow.cb.getSelectedItem().toString()
 						+ "_pattern_in_" + fileEntry.getName() + "_project" + ".txt";
 				File f = new File(s2);
 				MainWindow.createFile(s, f);
@@ -52,7 +52,7 @@ public class ShowWaitAction2 extends AbstractAction {
 		};
 
 		Window win = SwingUtilities.getWindowAncestor((AbstractButton) evt.getSource());
-		final JDialog dialog = new JDialog(win, "Dialog", ModalityType.APPLICATION_MODAL);
+		final JDialog dialog = new JDialog(win, "Working", ModalityType.APPLICATION_MODAL);
 
 		mySwingWorker.addPropertyChangeListener(new PropertyChangeListener() {
 

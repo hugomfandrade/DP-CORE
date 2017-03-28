@@ -50,7 +50,7 @@ public class JFilePicker extends JPanel {
 		label = new JLabel(textFieldLabel);
 
 		Action action = new Action();
-		textField = new JTextField(30);
+		textField = new JTextField(22);
 		textField.addActionListener(action);
 		button = new JButton(buttonLabel);
 

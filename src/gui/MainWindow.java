@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Font;
 import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,9 +10,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 
 import parser.ClassObject;
 import parser.ClassObject.Abstraction;
@@ -28,7 +31,6 @@ public class MainWindow extends JFrame {
 	private JButton detect, create;
 	public static JCheckBox grouping;
 	public static JComboBox<String> cb;
-	private static JPanel panel;
 	public static Pattern p = new Pattern("");
 	public static boolean parseoccured = false;
 
@@ -42,54 +44,48 @@ public class MainWindow extends JFrame {
 
 		detect = new JButton(new ShowWaitAction2("Detect Pattern"));
 		detect.setToolTipText("Detects Pattern candidates of the chosen pattern type.");
-		detect.setSize(150, 25);
-		detect.setLocation(30, 150);
+		detect.setSize(180, 25);
+		detect.setLocation(35, 150);
 		add(detect);
 
 		create = new JButton("Create Custom Pattern");
 		create.setToolTipText("Tool for creating custom patterns.");
-		create.setSize(150, 25);
-		create.setLocation(250, 150);
+		create.setSize(180, 25);
+		create.setLocation(265, 150);
 		add(create);
 
 		grouping = new JCheckBox("Grouping");
 		grouping.setToolTipText("Check to group final results into HyperCandidates.");
 		grouping.setSize(100, 25);
-		grouping.setLocation(30, 185);
+		grouping.setLocation(35, 185);
 		add(grouping);
 
-		panel = new JPanel();
-		panel.setSize(180, 25);
-		panel.setLocation(250, 185);
-		panel.setLayout(null);
-		add(panel);
-		String[] choices = { "Choose a Pattern" };
-		cb = new JComboBox<String>(choices);
+		cb = new JComboBox<String>(new String[]{ "Choose a Pattern" });
 		cb.setSize(180, 25);
-		cb.setLocation(0, 0);
+		cb.setLocation(265, 185);
 		cb.setEditable(true);
 		cb.getEditor().getEditorComponent().setFocusable(false);
 		cb.setVisible(true);
-		panel.add(cb);
+		add(cb);
 
 		JPanel panel1 = new JPanel();
-		panel1.setSize(450, 35);
-		panel1.setLocation(0, 10);
+		panel1.setSize(470, 45);
+		panel1.setLocation(5, 10);
 		add(panel1);
 		JPanel panel2 = new JPanel();
-		panel2.setSize(450, 35);
-		panel2.setLocation(0, 45);
+		panel2.setSize(470, 45);
+		panel2.setLocation(5, 45);
 		add(panel2);
 		JPanel panel3 = new JPanel();
-		panel3.setSize(450, 35);
-		panel3.setLocation(0, 80);
+		panel3.setSize(470, 45);
+		panel3.setLocation(5, 80);
 		add(panel3);
 		// set up file picker components
 		JFilePicker patternPicker = new JFilePicker("Pick Pattern Folder", "Browse...", JFilePicker.type.Pattern);
 		patternPicker.setMode(JFilePicker.MODE_SAVE);
 		panel1.add(patternPicker);
 
-		JFilePicker projectPicker = new JFilePicker("Pick Project Folder", "Browse...", JFilePicker.type.Project);
+		JFilePicker projectPicker = new JFilePicker(" Pick Project Folder", "Browse...", JFilePicker.type.Project);
 		projectPicker.setMode(JFilePicker.MODE_SAVE);
 		panel2.add(projectPicker);
 
@@ -219,19 +215,35 @@ public class MainWindow extends JFrame {
 				}
 			}
 		} else {
-			// Set System Java L&F
+			// Set Cross Platform Java L&F
 			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+				setUIFont(new FontUIResource("Arial", Font.PLAIN,12));
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 					| UnsupportedLookAndFeelException e) {
 				e.printStackTrace();
 			}
 			MainWindow gui = new MainWindow();
-			gui.setSize(470, 260);
+			gui.setSize(490, 260);
 			gui.setResizable(false);
 			gui.setLocationRelativeTo(null);
 			gui.setVisible(true);
 			gui.setTitle("DP-CORE");
+		}
+	}
+	
+	/**
+	 * Sets the default font for all Swing components.
+	 * 
+	 * @param font the font to be set.
+	 */
+	public static void setUIFont(FontUIResource f) {
+		Enumeration<?> keys = UIManager.getDefaults().keys();
+		while (keys.hasMoreElements()) {
+			Object key = keys.nextElement();
+			Object value = UIManager.get(key);
+			if (value instanceof javax.swing.plaf.FontUIResource)
+				UIManager.put(key, f);
 		}
 	}
 
@@ -291,16 +303,9 @@ public class MainWindow extends JFrame {
 		if (Patterns == null || Patterns.size() == 0) {
 			JOptionPane.showMessageDialog(new JFrame(), "Current Folder contains no pattern files.",
 					"No Pattern Files", JOptionPane.INFORMATION_MESSAGE);
-			String choices[] = new String[1];
-			choices[0] = "Choose a Pattern";
 			cb.setVisible(false);
-			cb = new JComboBox<String>(choices);
-			cb.setSize(180, 25);
-			cb.setLocation(0, 0);
-			cb.setEditable(true);
-			cb.getEditor().getEditorComponent().setFocusable(false);
+			cb.setModel(new DefaultComboBoxModel<>(new String[]{ "Choose a Pattern" }));
 			cb.setVisible(true);
-			panel.add(cb);
 		} else {
 			String choices[] = new String[Patterns.size() + 1];
 			choices[0] = "Choose a Pattern";
@@ -308,13 +313,8 @@ public class MainWindow extends JFrame {
 				choices[i] = Patterns.get(i - 1);
 			}
 			cb.setVisible(false);
-			cb = new JComboBox<String>(choices);
-			cb.setSize(180, 25);
-			cb.setLocation(0, 0);
-			cb.setEditable(true);
-			cb.getEditor().getEditorComponent().setFocusable(false);
+			cb.setModel(new DefaultComboBoxModel<>(choices));
 			cb.setVisible(true);
-			panel.add(cb);
 		}
 	}
 

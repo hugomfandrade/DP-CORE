@@ -21,24 +21,24 @@ public class NumbersWindow extends JDialog {
 
 	// Constructor
 	public NumbersWindow() {
-		setSize(300, 240);
+		setSize(330, 240);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setTitle("Pattern Creator");
 		setLayout(null);
 		label1 = new JLabel("Number of Members: ");
-		label1.setSize(150, 25);
+		label1.setSize(165, 25);
 		label1.setLocation(35, 30);
 		add(label1);
 
 		label2 = new JLabel("Number of Connections: ");
-		label2.setSize(150, 25);
+		label2.setSize(165, 25);
 		label2.setLocation(35, 75);
 		add(label2);
 
 		label3 = new JLabel("Name of Pattern: ");
-		label3.setSize(150, 25);
+		label3.setSize(165, 25);
 		label3.setLocation(35, 125);
 		add(label3);
 
@@ -46,7 +46,7 @@ public class NumbersWindow extends JDialog {
 
 		cb1 = new JComboBox<String>(choices);
 		cb1.setSize(40, 25);
-		cb1.setLocation(185, 27);
+		cb1.setLocation(200, 27);
 		cb1.setEditable(true);
 		cb1.getEditor().getEditorComponent().setFocusable(false);
 		cb1.setVisible(true);
@@ -54,7 +54,7 @@ public class NumbersWindow extends JDialog {
 
 		cb2 = new JComboBox<String>(choices);
 		cb2.setSize(40, 25);
-		cb2.setLocation(185, 77);
+		cb2.setLocation(200, 77);
 		cb2.setEditable(true);
 		cb2.getEditor().getEditorComponent().setFocusable(false);
 		cb2.setVisible(true);
@@ -62,16 +62,16 @@ public class NumbersWindow extends JDialog {
 
 		textfield = new JTextField(15);
 		textfield.setSize(130, 25);
-		textfield.setLocation(140, 127);
+		textfield.setLocation(155, 127);
 		add(textfield);
 
 		ok = new JButton("OK");
-		ok.setSize(80, 25);
-		ok.setLocation(110, 175);
+		ok.setSize(90, 25);
+		ok.setLocation(100, 175);
 		add(ok);
 
 		cancel = new JButton("CANCEL");
-		cancel.setSize(80, 25);
+		cancel.setSize(90, 25);
 		cancel.setLocation(200, 175);
 		add(cancel);
 
@@ -109,7 +109,7 @@ public class NumbersWindow extends JDialog {
 			for (String s : Patterns) {
 				if (textfield.getText().equals(s)) {
 					repl = JOptionPane.showConfirmDialog(null, "Are you sure you want to overwrite " + s + " pattern?",
-							s + " pattern allready exists!", JOptionPane.YES_NO_OPTION);
+							s + " pattern already exists!", JOptionPane.YES_NO_OPTION);
 					break;
 				}
 
