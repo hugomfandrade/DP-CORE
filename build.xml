@@ -6,6 +6,7 @@
 	</description>
 
 	<property name="src" location="src" />
+	<property name="test" location="test" />
 	<property name="bin" location="bin" />
 	<property name="dist" location="dist" />
 	<property name="examples" location="examples" />
