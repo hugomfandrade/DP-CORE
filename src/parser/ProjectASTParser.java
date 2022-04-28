@@ -9,22 +9,21 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.sun.source.tree.ClassTree;
-import com.sun.source.tree.MethodInvocationTree;
-import com.sun.source.tree.MethodTree;
-import com.sun.source.tree.NewClassTree;
-import com.sun.source.tree.Tree;
-import com.sun.source.tree.VariableTree;
+import com.sun.source.tree.*;
 import com.sun.source.util.JavacTask;
 import com.sun.source.util.TreeScanner;
 import com.sun.tools.javac.api.JavacTool;
 
+import javax.lang.model.element.Modifier;
+import javax.lang.model.element.VariableElement;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.JavaFileObject.Kind;
 import javax.tools.StandardJavaFileManager;
 
+import com.sun.tools.javac.tree.JCTree;
+import com.sun.tools.javac.tree.TreeInfo;
 import parser.ClassObject.Abstraction;
 import parser.Connection.Type;
 
@@ -201,6 +200,21 @@ public class ProjectASTParser {
 			thisclass.addMVariable(var);
 			return super.visitVariable(node, p);
 		}
+
+		/*
+		@Override
+		public Boolean visitMemberSelect(MemberSelectTree memberSelectTree, Void unused) {
+			/*
+			if (thisclass != null && thisclass.getName() != null && thisclass.getName().contains("Fruit")) {
+				System.out.println(thisclass);
+			}
+			* /
+			thisclass.getVariables().stream()
+					.filter(variable -> memberSelectTree.getIdentifier().contentEquals(variable.getName()))
+					.forEach(variable -> variable.addmodifier(Modifier.DEFAULT + "-field"));
+			return super.visitMemberSelect(memberSelectTree, unused);
+		}
+		*/
 	}
 
 	/**
@@ -318,6 +332,32 @@ public class ProjectASTParser {
 						newmethod.setisAbstract(true);
 				}
 				newclass.addMethod(newmethod);
+			}
+			if (t.getKind() == Tree.Kind.VARIABLE) {
+				VariableTree node = (VariableTree) t;
+				Variable var = new Variable();
+				var.setName(node.getName().toString());
+				String s = node.getType().toString();
+				var.settype(s);
+				// Check for arrays and/or list of classes
+				if (s.contains("<")) {
+					String s1 = s.substring(s.indexOf("<") + 1, s.indexOf(">"));
+					s = s1;
+				} else if (s.contains("[]")) {
+					String s2 = s.substring(0, s.indexOf("["));
+					s = s2;
+				}
+
+				// If you encounter a new class, add it in Classes
+				if ((!GeneralMethods.isPrimitive(s)) && (!Classes.containsKey(s)) && (!s.contains("[]"))) {
+					Create_ClassObject(s);
+				}
+				if (node.getInitializer() != null)
+					var.setinitializer(node.getInitializer().toString());
+				for (Object m : node.getModifiers().getFlags().toArray()) {
+					var.addmodifier(m.toString());
+				}
+				newclass.addMember(var);
 			}
 		}
 		// For NewClass

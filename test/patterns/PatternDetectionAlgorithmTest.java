@@ -311,7 +311,7 @@ public class PatternDetectionAlgorithmTest {
         Assertions.assertEquals(0, detect(pattern, bridgeProject).size());
         Assertions.assertEquals(2, detect(pattern, builderProject).size());
         Assertions.assertEquals(0, detect(pattern, observerProject).size());
-        Assertions.assertEquals(2, detect(pattern, visitorProject).size());
+        Assertions.assertEquals(0, detect(pattern, visitorProject).size());
     }
 
     @Test
@@ -391,7 +391,7 @@ public class PatternDetectionAlgorithmTest {
         Assertions.assertEquals(4, detect(bridgePattern, project).size());
         Assertions.assertEquals(0, detect(bridgeV2Pattern, project).size());
         Assertions.assertEquals(2, detect(builderPattern, project).size());
-        Assertions.assertEquals(6, detect(commandPattern, project).size());
+        Assertions.assertEquals(4, detect(commandPattern, project).size());
         Assertions.assertEquals(4, detect(observerPattern, project).size());
         Assertions.assertEquals(2, detect(visitorPattern, project).size());
 
@@ -401,7 +401,7 @@ public class PatternDetectionAlgorithmTest {
         assertEquals(detect(bridgePattern, project), "Triangle", "Triangle", "Pentagon", "Pentagon");
         assertEquals(detect(bridgeV2Pattern, project));
         assertEquals(detect(builderPattern, project), "MealDirector", "MealDirector");
-        assertEquals(detect(commandPattern, project), "JapaneseMealBuilder", "ShoppingCartVisitorImpl", "ShoppingCartVisitorImpl", "LightOffCommand", "ItalianMealBuilder", "LightOnCommand");
+        assertEquals(detect(commandPattern, project), "JapaneseMealBuilder", "LightOffCommand", "ItalianMealBuilder", "LightOnCommand");
         assertEquals(detect(observerPattern, project), "MyTopic", "ShoppingCartVisitorImpl", "ShoppingCartVisitorImpl", "MyTopicSubscriber");
         assertEquals(detect(visitorPattern, project), "Book", "Fruit");
 

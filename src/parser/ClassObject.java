@@ -26,6 +26,7 @@ public class ClassObject {
 	private ArrayList<String> MethodInvocations = new ArrayList<String>();
 	private ArrayList<Method> Methods = new ArrayList<Method>();
 	private ArrayList<Variable> Variables = new ArrayList<Variable>();
+	private ArrayList<Variable> Members = new ArrayList<Variable>();
 	private ArrayList<String> Modifiers = new ArrayList<String>();
 	private ArrayList<String> New_Instances = new ArrayList<String>();
 	private Connections connections = new Connections();
@@ -197,6 +198,14 @@ public class ClassObject {
 	}
 
 	/**
+	 * Adds a Member object into the Members arraylist, input
+	 * Object should be representing a variable of this ClassObject
+	 */
+	public void addMember(Variable v) {
+		Members.add(v);
+	}
+
+	/**
 	 * Adds a String into the Modifiers arraylist, input
 	 * String should be representing a modifier of this ClassObject
 	 */
@@ -331,7 +340,7 @@ public class ClassObject {
 		Connection temphas;
 		int flag;
 		String s;
-		for (Variable v : Variables) {
+		for (Variable v : Members) {
 			s = v.gettype();
 			flag = 0;
 			if (ProjectASTParser.Classes.containsKey(s)) {
