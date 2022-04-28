@@ -1,0 +1,8 @@
+
+# But not these files...
+/jhotdraw60b1/
+!jhotdraw60b1/src
+/jdk6-master/
+!jdk6-master/jdk/src/share/classes/java/awt
+/ant-rel-1.6.2/
+!ant-rel-1.6.2/src/main
