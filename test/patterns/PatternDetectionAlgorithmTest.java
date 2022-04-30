@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Assertions;
 import parser.ProjectASTParser;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static patterns.PatternDetectionAlgorithmTestUtils.getCandidates;
 
 public class PatternDetectionAlgorithmTest {
 
@@ -410,7 +410,20 @@ public class PatternDetectionAlgorithmTest {
     private static ArrayList<PatternCandidate> detect(Pattern pattern, File project) {
 
         ProjectASTParser.parse(project.getAbsolutePath());
-        PatternDetectionAlgorithm.DetectPattern_Results(pattern, false);
+        PatternDetectionAlgorithm.DetectPatternFast(new Pattern("name"));
+        PatternDetectionAlgorithm.clear();
+        PatternDetectionAlgorithm.DetectPattern_Results(pattern, true);
+
+        /*
+        System.out.println(pattern.get_name() + " " +
+                getCandidates().size() + " " +
+                getSuperCandidates().size() + " " +
+                getHyperCandidates().size());
+
+        getCandidates().forEach(patternCandidate -> System.out.println("  p => " + stringify(patternCandidate)));
+        getSuperCandidates().forEach(patternCandidate -> System.out.println("sp => " + stringify(patternCandidate)));
+        getHyperCandidates().forEach(patternCandidate -> System.out.println("hp => " + stringify(patternCandidate)));
+        */
 
         return Optional.ofNullable(getCandidates()).orElse(new ArrayList<>());
     }
@@ -431,17 +444,6 @@ public class PatternDetectionAlgorithmTest {
 
         for (int i = 0 ; i < patternCandidates.size() ; i++) {
             Assertions.assertEquals(expectedMemberConcreteNames[i], patternCandidates.get(i).getMembers().get(0).getName());
-        }
-    }
-
-    private static ArrayList<PatternCandidate> getCandidates() {
-        try {
-            Field field = PatternDetectionAlgorithm.class.getDeclaredField("Candidates");
-            field.setAccessible(true); // Suppress Java language access checking
-            return (ArrayList<PatternCandidate>) field.get(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 }
