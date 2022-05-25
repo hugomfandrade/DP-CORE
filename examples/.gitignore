@@ -6,3 +6,14 @@
 !jdk6-master/jdk/src/share/classes/java/awt
 /ant-rel-1.6.2/
 !ant-rel-1.6.2/src/main
+
+/libphonenumber-master/
+!libphonenumber-master/cpp/
+!libphonenumber-master/java/
+
+/*/.AppleDouble/
+/*/.settings/
+/*/.uml/
+/*/bin/
+/11 - PMD/docs/
+/11 - PMD/xdocs/
