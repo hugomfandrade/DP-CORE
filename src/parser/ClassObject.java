@@ -272,6 +272,8 @@ public class ClassObject {
 		Connection tempuse;
 		for (Method m : Methods) {
 			if (!(GeneralMethods.isPrimitive(m.getReturntype()))) {
+				// MODIFICATIONS, filter static methods
+				if (m.getModifiers().contains("static")) continue;
 				tempuse = new Connection(this, ProjectASTParser.Classes.get(m.getReturntype()), Type.uses);
 				connections.add(tempuse);
 			}
@@ -453,6 +455,13 @@ public class ClassObject {
 				// End of duplicate checking
 				// If it is not duplicate (flag is 0)
 				if (flag == 0) {
+					// MODIFIED (for inner classes)
+					if (s.contains(".")) {
+						//
+						// s = s.substring(!s.contains(".") ? 0 : s.lastIndexOf(".") + 1);
+						// System.out.println(" create of " + this.getName() + " [" + s + "] " + " (to) " + ProjectASTParser.Classes.get(s));
+					}
+					// System.out.println(" create of " + this.getName() + " [" + s + "] " + " (to) " + ProjectASTParser.Classes.get(s));
 					tempcreate = new Connection(this, ProjectASTParser.Classes.get(s), Type.creates);
 					connections.add(tempcreate);
 				}
