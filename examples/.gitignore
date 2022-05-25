@@ -10,6 +10,7 @@
 /libphonenumber-master/
 !libphonenumber-master/cpp/
 !libphonenumber-master/java/
+!libphonenumber-master/javascript/
 
 /*/.AppleDouble/
 /*/.settings/
