@@ -272,8 +272,8 @@ public class ClassObject {
 		Connection tempuse;
 		for (Method m : Methods) {
 			if (!(GeneralMethods.isPrimitive(m.getReturntype()))) {
-				// MODIFICATIONS, filter static methods
-				if (m.getModifiers().contains("static")) continue;
+				// MODIFIED filter static methods
+				if (BugCorrections.isStatic(m.getModifiers())) continue;
 				tempuse = new Connection(this, ProjectASTParser.Classes.get(m.getReturntype()), Type.uses);
 				connections.add(tempuse);
 			}
@@ -342,7 +342,8 @@ public class ClassObject {
 		Connection temphas;
 		int flag;
 		String s;
-		for (Variable v : Members) {
+		for (Variable v : BugCorrections.ENABLED ? Variables : Members) {
+			if (BugCorrections.isStatic(v.getmodifiers())) continue;
 			s = v.gettype();
 			flag = 0;
 			if (ProjectASTParser.Classes.containsKey(s)) {
@@ -392,6 +393,7 @@ public class ClassObject {
 			for (i = 0; i < words.length - 1; i++) {
 				flag = 0;
 				for (Variable v : Variables) {
+					if (BugCorrections.isStatic(v.getmodifiers())) continue;
 					if (words[i].equals(v.getName())) {
 						// this word is a variable, next should be its method
 						for (ClassObject c : ProjectASTParser.Classes.values()) {
