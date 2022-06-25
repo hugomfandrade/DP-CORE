@@ -26,6 +26,7 @@ public class ClassObject {
 	private ArrayList<String> MethodInvocations = new ArrayList<String>();
 	private ArrayList<Method> Methods = new ArrayList<Method>();
 	private ArrayList<Variable> Variables = new ArrayList<Variable>();
+	private ArrayList<Variable> Members = new ArrayList<Variable>();
 	private ArrayList<String> Modifiers = new ArrayList<String>();
 	private ArrayList<String> New_Instances = new ArrayList<String>();
 	private Connections connections = new Connections();
@@ -197,6 +198,14 @@ public class ClassObject {
 	}
 
 	/**
+	 * Adds a Member object into the Members arraylist, input
+	 * Object should be representing a variable of this ClassObject
+	 */
+	public void addMember(Variable v) {
+		Members.add(v);
+	}
+
+	/**
 	 * Adds a String into the Modifiers arraylist, input
 	 * String should be representing a modifier of this ClassObject
 	 */
@@ -263,6 +272,8 @@ public class ClassObject {
 		Connection tempuse;
 		for (Method m : Methods) {
 			if (!(GeneralMethods.isPrimitive(m.getReturntype()))) {
+				// MODIFIED filter static methods
+				if (BugCorrections.isStatic(m.getModifiers())) continue;
 				tempuse = new Connection(this, ProjectASTParser.Classes.get(m.getReturntype()), Type.uses);
 				connections.add(tempuse);
 			}
@@ -331,7 +342,8 @@ public class ClassObject {
 		Connection temphas;
 		int flag;
 		String s;
-		for (Variable v : Variables) {
+		for (Variable v : BugCorrections.ENABLED ? Variables : Members) {
+			if (BugCorrections.isStatic(v.getmodifiers())) continue;
 			s = v.gettype();
 			flag = 0;
 			if (ProjectASTParser.Classes.containsKey(s)) {
@@ -381,6 +393,7 @@ public class ClassObject {
 			for (i = 0; i < words.length - 1; i++) {
 				flag = 0;
 				for (Variable v : Variables) {
+					if (BugCorrections.isStatic(v.getmodifiers())) continue;
 					if (words[i].equals(v.getName())) {
 						// this word is a variable, next should be its method
 						for (ClassObject c : ProjectASTParser.Classes.values()) {
@@ -444,6 +457,13 @@ public class ClassObject {
 				// End of duplicate checking
 				// If it is not duplicate (flag is 0)
 				if (flag == 0) {
+					// MODIFIED (for inner classes)
+					if (s.contains(".")) {
+						//
+						// s = s.substring(!s.contains(".") ? 0 : s.lastIndexOf(".") + 1);
+						// System.out.println(" create of " + this.getName() + " [" + s + "] " + " (to) " + ProjectASTParser.Classes.get(s));
+					}
+					// System.out.println(" create of " + this.getName() + " [" + s + "] " + " (to) " + ProjectASTParser.Classes.get(s));
 					tempcreate = new Connection(this, ProjectASTParser.Classes.get(s), Type.creates);
 					connections.add(tempcreate);
 				}

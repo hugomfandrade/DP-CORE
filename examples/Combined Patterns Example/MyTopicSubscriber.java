@@ -11,11 +11,14 @@ public class MyTopicSubscriber implements Observer {
     @Override
     public void update() {
         String msg = (String) topic.getUpdate(this);
+        String msg = (String) getTopic().getUpdate(this);
         if(msg == null){
             System.out.println(name+":: No new message");
         }else
         System.out.println(name+":: Consuming message::"+msg);
     }
+
+    private Subject getTopic() { return topic; }
  
     @Override
     public void setSubject(Subject sub) {

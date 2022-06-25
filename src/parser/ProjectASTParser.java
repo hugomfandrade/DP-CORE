@@ -1,32 +1,22 @@
 package parser;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import com.sun.source.tree.ClassTree;
-import com.sun.source.tree.MethodInvocationTree;
-import com.sun.source.tree.MethodTree;
-import com.sun.source.tree.NewClassTree;
-import com.sun.source.tree.Tree;
-import com.sun.source.tree.VariableTree;
+import com.sun.source.tree.*;
 import com.sun.source.util.JavacTask;
-import com.sun.source.util.TreeScanner;
+import com.sun.source.util.TreePath;
+import com.sun.source.util.TreePathScanner;
 import com.sun.tools.javac.api.JavacTool;
+import parser.ClassObject.Abstraction;
+import parser.Connection.Type;
 
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
 import javax.tools.JavaFileObject.Kind;
 import javax.tools.StandardJavaFileManager;
-
-import parser.ClassObject.Abstraction;
-import parser.Connection.Type;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class ProjectASTParser {
 
@@ -111,16 +101,39 @@ public class ProjectASTParser {
 			j.findHas();
 			j.findReferences();
 		}
+		if (true) {
+			Object o1 = Classes.values()
+					.stream()
+					// .filter(c -> c.getName().contains("TestCase"))
+					.filter(c -> c.getName().contains("Swapper"))
+					// .filter(c -> c.toString().contains("(Unknown)"))
+					.collect(Collectors.toList());
+			return;
+		}
 	}
 
+	public static TreePath currentPath;
 	/**
 	 * Function extending TreeScanner in order to extract the facts we need.
 	 * 
 	 */
-	private static class SignatureExtractor extends TreeScanner<Boolean, Void> {
+	private static class SignatureExtractor extends TreePathScanner<Boolean, Void> {
 
 		public SignatureExtractor() {
+		}
 
+		@Override
+		public Boolean scan(TreePath treePath, Void unused) {
+			Boolean r = super.scan(treePath, unused);
+			currentPath = getCurrentPath();
+			return r;
+		}
+
+		@Override
+		public Boolean scan(Tree tree, Void unused) {
+			Boolean r = super.scan(tree, unused);
+			currentPath = getCurrentPath();
+			return r;
 		}
 
 		/**
@@ -131,10 +144,14 @@ public class ProjectASTParser {
 		public Boolean visitClass(ClassTree node, Void p) {
 			ClassTree aclass = node;
 
-			if (Classes.containsKey(aclass.getSimpleName())) {
+			// System.out.println("creating full path " + this.getCurrentPath().getCompilationUnit().getPackageName().toString() + "." + aclass.getSimpleName());
+			// System.out.println("creating full path " + BugCorrections.getClassScope(getCurrentPath()));//this.getCurrentPath().getCompilationUnit().getPackageName().toString() + "." + aclass.getSimpleName());
+
+			String name = BugCorrections.getClassScope(getCurrentPath(), aclass);
+			if (Classes.containsKey(name)) {
 				Fill_ClassObject(aclass);
 			} else {
-				if (!GeneralMethods.isPrimitive(aclass.getSimpleName().toString())) {
+				if (!GeneralMethods.isPrimitive(name)) {
 					Create_ClassObject(aclass);
 				} else {
 					// System.out.println("Primitive type found: " + aclass.getSimpleName().toString());
@@ -153,7 +170,8 @@ public class ProjectASTParser {
 			String s;
 			s = node.getIdentifier().toString();
 			// Adding new instances to the corresponding ClassObject
-			Classes.get(thisclass.getName()).addNew_Instance(s);
+			ClassObject thisclass = BugCorrections.getClassObject(getCurrentPath());
+			if (thisclass != null) Classes.get(thisclass.getName()).addNew_Instance(s);
 			if (!Classes.containsKey(s)) {
 				Create_ClassObject(s);
 			}
@@ -166,7 +184,8 @@ public class ProjectASTParser {
 		 */
 		@Override
 		public Boolean visitMethodInvocation(MethodInvocationTree node, Void p) {
-			thisclass.addMethodInvocation(node.getMethodSelect().toString());
+			ClassObject thisclass = BugCorrections.getClassObject(getCurrentPath());
+			if (thisclass != null) thisclass.addMethodInvocation(node.getMethodSelect().toString());
 			return super.visitMethodInvocation(node, p);
 		}
 
@@ -198,7 +217,8 @@ public class ProjectASTParser {
 			for (Object m : node.getModifiers().getFlags().toArray()) {
 				var.addmodifier(m.toString());
 			}
-			thisclass.addMVariable(var);
+			ClassObject thisclass = BugCorrections.getClassObject(getCurrentPath());
+			if (thisclass != null) thisclass.addMVariable(var);
 			return super.visitVariable(node, p);
 		}
 	}
@@ -257,15 +277,21 @@ public class ProjectASTParser {
 			newclass.set_abstraction(Abstraction.Interface);
 		// Setting Extends
 		if (aclass.getExtendsClause() != null) {
-			newclass.setExtends(aclass.getExtendsClause().toString());
-			if (!Classes.containsKey(aclass.getExtendsClause().toString()))
-				Create_ClassObject(aclass.getExtendsClause().toString());
+			String extensionName = BugCorrections.getClassName(aclass.getExtendsClause());
+			newclass.setExtends(extensionName);
+			if (!Classes.containsKey(extensionName))
+				Create_ClassObject(extensionName);
 		}
 		// Setting Implements
 		for (Tree t : aclass.getImplementsClause()) {
-			newclass.addImplement(t.toString());
-			if (!Classes.containsKey(t.toString()))
-				Create_ClassObject(t.toString());
+			Object o0 = t.getKind();
+			// Object o1 = t instanceof ((JCTree.JCIdent) t).sym;
+			// Object o2 = ((JCTree.JCIdent) t).getTree();
+			String implementName = BugCorrections.getClassName(t);
+
+			newclass.addImplement(implementName);
+			if (!Classes.containsKey(implementName))
+				Create_ClassObject(implementName);
 		}
 		// Setting Modifiers and isAbstract
 		for (Object t : aclass.getModifiers().getFlags().toArray()) {
@@ -275,6 +301,32 @@ public class ProjectASTParser {
 		}
 		// Setting Methods
 		for (Tree t : aclass.getMembers()) {
+			if ((t.getKind() == Tree.Kind.CLASS || t.getKind() == Tree.Kind.INTERFACE) && BugCorrections.ENABLED) {
+				ClassTree innerClass = (ClassTree) t;
+
+				String innerClassName = newclass.getName() + "." + innerClass.getSimpleName();
+
+				if (Classes.containsKey(innerClassName)) {
+					// Fill_ClassObject(innerClass);
+					ClassObject newInnerClass = Classes.remove(innerClassName);
+					create_fill_body(innerClass, newInnerClass);
+					Classes.remove(newInnerClass.getName());
+					Classes.put(innerClassName, newInnerClass);
+				} else {
+					if (!GeneralMethods.isPrimitive(innerClassName)) {
+						// Create_ClassObject(innerClass);
+						// new ClassObject
+						ClassObject newInnerClass = new ClassObject();
+						// Setting Name
+						newInnerClass.setName(innerClassName);
+						create_fill_body(innerClass, newInnerClass);
+						Classes.remove(newInnerClass.getName());
+						Classes.put(innerClassName, newInnerClass);
+					} else {
+						// System.out.println("Primitive type found: " + aclass.getSimpleName().toString());
+					}
+				}
+			}
 			if (t.getKind() == Tree.Kind.METHOD) {
 				MethodTree method = (MethodTree) t;
 				Method newmethod = new Method();
@@ -318,6 +370,32 @@ public class ProjectASTParser {
 						newmethod.setisAbstract(true);
 				}
 				newclass.addMethod(newmethod);
+			}
+			if (t.getKind() == Tree.Kind.VARIABLE) {
+				VariableTree node = (VariableTree) t;
+				Variable var = new Variable();
+				var.setName(node.getName().toString());
+				String s = node.getType().toString();
+				var.settype(s);
+				// Check for arrays and/or list of classes
+				if (s.contains("<")) {
+					String s1 = s.substring(s.indexOf("<") + 1, s.indexOf(">"));
+					s = s1;
+				} else if (s.contains("[]")) {
+					String s2 = s.substring(0, s.indexOf("["));
+					s = s2;
+				}
+
+				// If you encounter a new class, add it in Classes
+				if ((!GeneralMethods.isPrimitive(s)) && (!Classes.containsKey(s)) && (!s.contains("[]"))) {
+					Create_ClassObject(s);
+				}
+				if (node.getInitializer() != null)
+					var.setinitializer(node.getInitializer().toString());
+				for (Object m : node.getModifiers().getFlags().toArray()) {
+					var.addmodifier(m.toString());
+				}
+				newclass.addMember(var);
 			}
 		}
 		// For NewClass
