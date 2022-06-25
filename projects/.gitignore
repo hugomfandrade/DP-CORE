@@ -1,0 +1,14 @@
+
+# But not these files...
+/Article/jhotdraw60b1/
+!Article/jhotdraw60b1/src
+/Article/jdk6-master/
+!Article/jdk6-master/jdk/src/share/classes/java/awt
+/Article/ant-rel-1.6.2/
+!Article/ant-rel-1.6.2/src/main
+
+/*/.AppleDouble/
+/*/.settings/
+/*/.uml/
+/*/bin/
+
