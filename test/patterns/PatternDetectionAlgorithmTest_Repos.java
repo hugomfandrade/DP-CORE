@@ -25,7 +25,7 @@ public class PatternDetectionAlgorithmTest_Repos {
     // Projects
     //
     private final File antProject = new File("projects/Article/ant-rel-1.6.2/src/main");
-    private final File awtProject = new File("projects/Article/jdk6-master/jdk/src/share/classes/java/awt");
+    private final File awtProject = new File("projects/Article/awt-jdk6");
     private final File jHotDrawProject = new File("projects/Article/jhotdraw60b1/src");
 
     private final File _01_quickUMLProject = new File("projects/P-MARt/1 - QuickUML 2001/src");
