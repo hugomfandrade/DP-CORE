@@ -9,11 +9,33 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 public final class PatternDetectionAlgorithmTestUtils {
 
     private PatternDetectionAlgorithmTestUtils() {
         throw new RuntimeException("this is a utility class");
+    }
+
+
+    public static void analyse(File project, Pattern[] patterns) {
+        analyse(project, patterns, false);
+    }
+
+    public static void analyse(File project, Pattern[] patterns, boolean printify) {
+
+        System.out.println();
+        System.out.print(project.getPath());
+        ProjectASTParser.parse(project.getAbsolutePath());
+        System.out.println("  -> " + ProjectASTParser.Classes.size() + " classes");
+
+        for (Pattern pattern : patterns) {
+
+            detect(pattern);
+
+            System.out.println(stringifyResults(pattern));
+            if (printify) System.out.print(stringifyResults(pattern, getCandidates()));
+        }
     }
 
     public static List<PatternCandidate> detect(Pattern pattern, File project) {
@@ -99,6 +121,42 @@ public final class PatternDetectionAlgorithmTestUtils {
         return s.toString();
     }
 
+    public static String stringifyResults(Pattern pattern, List<PatternCandidate> patternCandidates) {
+
+        final StringBuilder s = new StringBuilder();
+
+        Function<String, String> simplify = s1 -> s1.substring(s1.lastIndexOf('.') + 1);
+
+        patternCandidates
+                .forEach(patternCandidate -> patternCandidate
+                        .getMembers()
+                        .forEach(c -> c.setName(simplify.apply(c.getName())))
+                );
+
+        sort(patternCandidates);
+
+        for (PatternCandidate e : patternCandidates) {
+            // s.append("\n");
+            // s.append("Candidate of Pattern ").append(e.getPatternName()).append(":\n");
+
+            StringBuilder s0 = new StringBuilder();
+            s0.append(" -");
+            for (int i = 0; i < e.getMemberCount(); i++) {
+                s0// .append(e.getMemberNames().get(i))
+                        // .append("(")
+                        // .append(e.getMemberAbilities().get(i))
+                        // .append("): ")
+                        // .append(": ")
+                        .append(e.getMembers().get(i).getName())
+                        .append(", ")
+                        .append(" ");
+            }
+
+            s.append(s0).append("\n");
+        }
+        return s.toString();
+    }
+
     public static List<PatternCandidate> getCandidates() {
         try {
             Field field = PatternDetectionAlgorithm.class.getDeclaredField("Candidates");
@@ -132,7 +190,7 @@ public final class PatternDetectionAlgorithmTestUtils {
         }
     }
 
-    public static void printGenerateArray(Pattern pattern, ArrayList<PatternCandidate> candidates) {
+    public static void printGenerateArray(Pattern pattern, List<PatternCandidate> candidates) {
 
         System.out.print("var " + pattern.get_name() + "Results = [");
 
